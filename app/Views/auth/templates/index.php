@@ -24,7 +24,7 @@
 
 <body class="bg-gradient-primary">
 
- <?= $this->renderSection('content'); ?>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="<?= base_url('vendor/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
