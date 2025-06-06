@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index(): string
+      public function index(): string
     {
-        return view('auth/register');
+        return view('user/index');
     }
 }
