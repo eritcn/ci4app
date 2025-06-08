@@ -44,7 +44,7 @@
 
                                     <?= view('Myth\Auth\Views\_message_block') ?>
 
-                                    <form action= "<?= route_to('login') ?>" method="post" class="user">
+                                    <form action= "<?= url_to('login') ?>" method="post" class="user">
                                       <?= csrf_field() ?>
                                     
                                     <?php if ($config->validFields === ['email']): ?>
@@ -96,7 +96,7 @@
 
                                     <?php if ($config->allowRegistration) : ?>
                                     <div class="text-center">
-                                        <a class="small" href="<?= route_to('register') ?>"><?=lang('Auth.needAnAccount')?></a>
+                                        <a class="small" href="<?= url_to('register') ?>"><?=lang('Auth.needAnAccount')?></a>
                                     </div>
                                     <?php endif; ?>
                                 </div>

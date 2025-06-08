@@ -40,7 +40,7 @@
 
                              <?= view('Myth\Auth\Views\_message_block') ?>
 
-                            <form action="<?= url_to('register') ?>" method="post" class="user">
+                            <form action="<?= route_to('register') ?>" method="post" class="user">
                               <?= csrf_field() ?>
                      
                                 <div class="form-group">
@@ -70,7 +70,7 @@
                             <hr>
                           
                             <div class="text-center">
-                                <a <?=lang('Auth.alreadyRegistered')?> class="small" href="<?= url_to('login') ?>">Already have an account? <?=lang('Auth.signIn')?></a>
+                                <a class="small" href="<?= url_to('login') ?>"><?=lang('Auth.alreadyRegistered')?> <?=lang('Auth.signIn')?></a>
                             </div>
                         </div>
                     </div>
