@@ -89,7 +89,7 @@
 
                                     <?php if ($config->activeResetter): ?>
                                     <div class="text-center">
-                                        <a class="small" href="<?= route_to('forgot') ?>"><?=lang('Auth.forgotYourPassword')?></a>
+                                        <a class="small" href="<?= url_to('forgot') ?>"><?=lang('Auth.forgotYourPassword')?></a>
                                     </div>
                                     <?php endif; ?>
 
