@@ -6,6 +6,7 @@ use CodeIgniter\Config\View as BaseView;
 use CodeIgniter\View\ViewDecoratorInterface;
 
 /**
+
  * @phpstan-type parser_callable (callable(mixed): mixed)
  * @phpstan-type parser_callable_string (callable(mixed): mixed)&string
  */
