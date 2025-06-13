@@ -1,4 +1,4 @@
-  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+  <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -14,14 +14,14 @@
 <?php if (in_groups('admin')) : ?>
             <!-- Heading -->
             <div class="sidebar-heading">
-                User Management
+                User Manage
             </div>
         
             <!-- User List -->
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('admin'); ?>">
                     <i class="fas fa-users"></i>
-                    <span>User List</span></a>
+                    <span class="user-list text-info">User List</span></a>
             </li>
 <?php endif; ?>
             <!-- Divider -->
@@ -36,14 +36,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('user'); ?>">
                     <i class="fas fa-user"></i>
-                    <span>My Profile</span></a>
+                    <span class="my-profile text-warning">My Profile</span></a>
             </li>
 
-            <!-- New Item Edit Profile -->
+            <hr class="sidebar-divider ">
+
+            <!-- New Item Data Base -->
+               <div class="sidebar-heading">
+                Database Manage
+            </div>
+
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-user-edit"></i>
-                    <span>Edit Profile</span></a>
+                <a class="nav-link" href="<?= base_url('user/database'); ?>">
+                    <i class="fas fa-receipt"></i>
+                    <span class="data-base text-success">Data Base</span></a>
             </li>
 
              <!-- Divider -->
@@ -53,7 +59,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('logout'); ?>">
                     <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span></a>
+                    <span class="logout text-danger">Logout</span></a>
             </li>
 
             <!-- Divider -->
