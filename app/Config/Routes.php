@@ -13,11 +13,13 @@ $routes->get('/', 'User::index');
 
 
 $routes->get('/user', 'User::index');
-$routes->get('/user', 'User::database');
+$routes->get('/database', 'Database::index');
+
 
 
 $routes->get('/user/index', 'User::index', ['filter' => 'role:user']);
-$routes->get('/user/database', 'User::database', ['filter' => 'role:user']);
+$routes->get('/database', 'Database::index', ['filter' => 'role:user']);
+$routes->get('/database', 'User::database', ['filter' => 'role:admin']);
 
 
 $routes->get('/admin', 'Admin::index', ['filter' => 'role:admin']);

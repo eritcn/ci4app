@@ -12,7 +12,7 @@ class Admin extends BaseController
     }
       public function index(): string
     {
-        $data['title'] = 'User List';
+        $data ['title'] = 'User List';
         // $users = new \Myth\Auth\Models\UserModel();
         // $data['users'] = $users->findAll();
 
@@ -22,13 +22,13 @@ class Admin extends BaseController
     $this->builder->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
     $query = $this->builder->get();
 
-    $data['users'] = $query->getResult();
+    $data ['users'] = $query->getResult();
 
         return view('admin/index', $data);
     }
       public function detail($id = 0): string
     {
-        $data['title'] = 'User Detail';
+        $data ['title'] = 'User Detail';
 
     $this->builder->select('users.id as userid, username, email, fullname, user_image, name');
     $this->builder->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
@@ -36,13 +36,15 @@ class Admin extends BaseController
     $this->builder->where('users.id', $id);
     $query = $this->builder->get();
 
-    $data['user'] = $query->getRow();
+    $data ['user'] = $query->getRow();
 
     if(empty($data['user'])) {
-        return redirect()->to('/admin');
+        return redirect()->to ('/admin');
     }
     
 
         return view('admin/detail', $data);
     }
+
+    
 }

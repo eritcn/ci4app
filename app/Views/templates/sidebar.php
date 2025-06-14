@@ -23,10 +23,10 @@
                     <i class="fas fa-users"></i>
                     <span class="user-list text-info">User List</span></a>
             </li>
-<?php endif; ?>
+
             <!-- Divider -->
             <hr class="sidebar-divider ">
-
+<?php endif; ?>
             <!-- Heading -->
             <div class="sidebar-heading">
                 User Profile
@@ -43,11 +43,11 @@
 
             <!-- New Item Data Base -->
                <div class="sidebar-heading">
-                Database Manage
+                Data Manage
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/database'); ?>">
+                <a class="nav-link" href="<?= base_url('database'); ?>">
                     <i class="fas fa-receipt"></i>
                     <span class="data-base text-success">Data Base</span></a>
             </li>
