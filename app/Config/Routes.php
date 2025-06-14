@@ -8,12 +8,15 @@ use CodeIgniter\Router\RouteCollection;
 
 
 
-// $routes->get('/', 'User::index', ['filter' => 'role:user']);
+
 $routes->get('/', 'User::index');
 
 
 $routes->get('/user', 'User::index');
 $routes->get('/database', 'Database::index');
+$routes->get('/ready', 'Ready::index');
+$routes->get('/breakdown', 'Breakdown::index');
+$routes->get('/ht', 'Ht::index');
 
 
 

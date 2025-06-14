@@ -36,7 +36,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('user'); ?>">
                     <i class="fas fa-user"></i>
-                    <span class="my-profile text-warning">My Profile</span></a>
+                    <span class="my-profile text-info">My Profile</span></a>
             </li>
 
             <hr class="sidebar-divider ">
@@ -48,8 +48,23 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('database'); ?>">
-                    <i class="fas fa-receipt"></i>
-                    <span class="data-base text-success">Data Base</span></a>
+                    <i class="fas fa-book"></i>
+                    <span class="data-base text-primary">Data Base Radio</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('ready'); ?>">
+                    <i class="fas fa-pager"></i>
+                    <span class="data-base text-success">Rig Ready Stock </span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('breakdown'); ?>">
+                    <i class="fas fa-pager"></i>
+                    <span class="data-base text-warning">Rig Breakdown </span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('ht'); ?>">
+                    <i class="fas fa-building"></i>
+                    <span class="data-base text-gray-400">Repair Radio HT  </span></a>
             </li>
 
              <!-- Divider -->

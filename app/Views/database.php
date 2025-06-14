@@ -5,7 +5,7 @@
 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-success">Data Base</h1>
+                    <h1 class="h3 mb-4 text-primary">Data Base</h1>
                     <div class="row">
                         <div class="col-lg-12">
                            
