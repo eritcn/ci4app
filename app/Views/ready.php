@@ -11,24 +11,64 @@
                            
 <table class="table">
   <thead class="table-success text-dark">
-    .    <tr>
+    <tr>
       <th scope="col">No.</th>
-      <th scope="col">Date</th>
       <th scope="col">Merk</th>
       <th scope="col">Type</th>
-      <th scope="col">Serial No</th>
-      <th scope="col">Note</th>
-    </tr>..
+      <th scope="col">Serial No.</th>
+      <th scope="col">Notes</th>
+      <th scope="col">Condition</th>
+    </tr>
   </thead>
   <tbody>
-    .. <tr>
+    <tr>
       <th scope="row">1</th>
-      <td>01-01-0001</td>
       <td>Motorola</td>
-      <td>@Xir M3688</td>
-      <td>@866000000</td>
+      <td>GM338</td>
+      <td>103ABCD123</td>
+      <td>Bekas Radio Unit DT1234 Offhired Bulan Juni 2025, Posisi Radio Ada Di Instrument East Block.</td>
       <td>Ready For Use</td>
-    </tr>.
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Motorola</td>
+      <td>GM338</td>
+      <td>103ABCD123</td>
+      <td>Bekas Radio Unit DT1234 Offhired Bulan Juni 2025, Posisi Radio Ada Di Instrument East Block.</td>
+      <td>Ready For Use</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Motorola</td>
+      <td>GM338</td>
+      <td>103ABCD123</td>
+      <td>Bekas Radio Unit DT1234 Offhired Bulan Juni 2025, Posisi Radio Ada Di Instrument East Block.</td>
+      <td>Ready For Use</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>Motorola</td>
+      <td>GM338</td>
+      <td>103ABCD123</td>
+      <td>Bekas Radio Unit DT1234 Offhired Bulan Juni 2025, Posisi Radio Ada Di Instrument East Block.</td>
+      <td>Ready For Use</td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>Motorola</td>
+      <td>GM338</td>
+      <td>103ABCD123</td>
+      <td>Bekas Radio Unit DT1234 Offhired Bulan Juni 2025, Posisi Radio Ada Di Instrument East Block.</td>
+      <td>Ready For Use</td>
+    </tr>
+    <tr>
+      <th scope="row">6</th>
+      <td>Motorola</td>
+      <td>GM338</td>
+      <td>103ABCD123</td>
+      <td>Bekas Radio Unit DT1234 Offhired Bulan Juni 2025, Posisi Radio Ada Di Instrument East Block.</td>
+      <td>Ready For Use</td>
+    </tr>
   </tbody>
 </table>
 

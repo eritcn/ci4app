@@ -17,6 +17,7 @@ $routes->get('/database', 'Database::index');
 $routes->get('/ready', 'Ready::index');
 $routes->get('/breakdown', 'Breakdown::index');
 $routes->get('/ht', 'Ht::index');
+$routes->get('/gs', 'Gs::index');
 
 
 

@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-dark">
 
     <div class="container">
 
@@ -62,7 +62,7 @@
                                              placeholder="<?=lang('Auth.repeatPassword')?>" autocomplete="off">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn btn-dark btn-user btn-block">
                                     <?=lang('Auth.register')?>
                                 </button>
                           

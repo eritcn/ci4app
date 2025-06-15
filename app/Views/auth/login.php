@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-dark">
 
     <div class="container">
 
@@ -80,7 +80,7 @@
                                         </div>
                                      <?php endif; ?>   
 
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-dark btn-user btn-block">
                                             <?=lang('Auth.loginAction')?>
                                         </button>
                                 
