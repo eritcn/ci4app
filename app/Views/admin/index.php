@@ -5,11 +5,11 @@
 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-info">User List</h1>
+                    <h3 class="h3 mb-4 text-info"><b> User List </b></h3>
                     <div class="row">
-                        <div class="col-lg-12">
-                           <table class="table">
-  <thead class="th text-dark">
+                        <div class="col-lg-11">
+                           <table class="table table-bordered table-striped table-sm">
+  <thead class="th text-dark th-sm">
     <tr>
       <th scope="col">No.</th>
       <th scope="col">Username</th>
@@ -27,7 +27,7 @@
       <td><?= $user->email; ?></td>
       <td><?= $user->name; ?></td>
       <td>
-        <a href="<?= base_url('admin/' . $user->userid); ?>" class="btn btn-info">detail</a>
+        <a href="<?= base_url('admin/' . $user->userid); ?>" class="btn btn-info btn-sm">detail</a>
       </td>
    
     

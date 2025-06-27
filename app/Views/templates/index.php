@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <title></title>
+    <link rel="stylesheet" href="/css/style.css">
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('vendor/fontawesome-free/css/all.min.css');?>" rel="stylesheet" type="text/css">
@@ -19,7 +20,9 @@
 
     <!-- Custom styles for this template-->
      <link href="<?= base_url('css/sb-admin-2.min.css');?> "rel="stylesheet">
-
+   
+     <link rel="stylesheet" href="/public/fontawesome/css/all.min.css">
+    
 </head>
 
 <body id="page-top">
@@ -100,6 +103,7 @@
 
     <!-- Custom scripts for all pages-->
      <script src="<?= base_url('js/sb-admin-2.min.js');?>"></script>
+
 
 
 </body>

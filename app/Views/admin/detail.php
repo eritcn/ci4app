@@ -8,9 +8,9 @@
                     <h1 class="h3 mb-4 text-gray-800">User Detail</h1>
              
 <div class="row">
-    <div class="col-lg-8">
-        <div class="card mb-5" style="max-width: 540px;">
-          <div class="row g-0">
+    <div class="col-lg-10">
+        <div class="card mb-5" style="max-width: 940px;">
+          <div class="row g-1">
             <div class="col-md-4">
               <img src="<?= base_url('/img/' . $user->user_image);?>" class="img-fluid rounded-start" alt="<?= $user->username; ?>">
            </div>

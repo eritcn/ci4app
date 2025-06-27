@@ -1,0 +1,24 @@
+.doc {
+    width: 100px;
+    height: 30px;
+}
+
+.table > tbody > tr > * {
+    vertical-align: middle;
+    font-size: 13px;
+    color: gray;
+}
+
+.table > thead > tr > th {
+   
+    text-align: left;
+}
+
+.container-fluid > .row > .col-lg-12 a {
+    font-size: small;
+}
+
+.container > .row > .col > .card > .row > .col > img {
+    height: 40px;
+}
+

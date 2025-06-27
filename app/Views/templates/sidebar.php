@@ -1,15 +1,15 @@
-  <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+  <ul class="navbar-nav bg-gray-900 sidebar sidebar-dark accordion"  id="accordionSidebar" >
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fab fa-battle-net"></i>
+                <div class="sidebar-brand-icon rotate-n-0">
+                    <i class="fas fa-mug-hot text-light text-sm"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Instrument<sup>2</sup></div>
+                <div class="sidebar-brand-text mx-1 text-info">Coffee_Time<sup class="sup text-light text-12px">++</sup></div>
             </a>
 
                 <!-- Divider -->
-            <hr class="sidebar-divider ">
+            <hr class="sidebar-divider border-secondary">
 
 <?php if (in_groups('admin')) : ?>
             <!-- Heading -->
@@ -20,12 +20,12 @@
             <!-- User List -->
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('admin'); ?>">
-                    <i class="fas fa-users"></i>
-                    <span class="user-list text-white">User List</span></a>
+                    <i class="fas fa-users text-primary"></i>
+                    <span class="user-list text-gray-500"><b> User List </b></span></a>
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider ">
+            <hr class="sidebar-divider border-secondary">
 <?php endif; ?>
             <!-- Heading -->
             <div class="sidebar-heading">
@@ -35,59 +35,73 @@
             <!-- My Profile -->
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('user'); ?>">
-                    <i class="fas fa-user"></i>
-                    <span class="my-profile text-white">My Profile</span></a>
+                    <i class="fas fa-user text-success"></i>
+                    <span class="my-profile text-gray-500"><b> My Profile </b></span></a>
             </li>
 
-            <hr class="sidebar-divider ">
+            <hr class="sidebar-divider border-secondary">
 
             <!-- New Item Data Base -->
                <div class="sidebar-heading">
                 Data Manage
             </div>
 
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('database'); ?>">
-                    <i class="fas fa-book"></i>
-                    <span class="data-base text-primary">Data Base Radio</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('ready'); ?>">
-                    <i class="fas fa-pager"></i>
-                    <span class="data-base text-success">Rig Ready Stock </span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('breakdown'); ?>">
-                    <i class="fas fa-pager"></i>
-                    <span class="data-base text-warning">Rig Breakdown </span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('ht'); ?>">
-                    <i class="fas fa-building"></i>
-                    <span class="data-base text-gray-400">Repair Radio HT  </span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('gs'); ?>">
-                    <i class="fab fa-connectdevelop"></i>
-                    <span class="data-base text-info">General Service</span></a>
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+                    aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder text-warning"></i>
+                    <span class="pages text-gray-500"> Page List </span>
+                </a>   
+
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-gray-700 py-1 collapse-inner rounded">
+
+                    
+                          <a class="nav-link" href="<?= base_url('database'); ?>">
+                    <i class="fas fa-fw fa-file text-gray-400"></i>
+                    <span class="data-base text-gray-400"><small> Stock Sparepart </small></span></a>
+
+
+                         <a class="nav-link" href="<?= base_url('rigrfu'); ?>">
+                    <i class="fas fa-fw fa-file text-gray-400"></i>
+                    <span class="data-base text-gray-400"><small> Radio Rig Bagus </small></span></a>
+
+                     <a class="nav-link" href="<?= base_url('rusak'); ?>">
+                    <i class="fas fa-fw fa-file text-gray-400"></i>
+                    <span class="data-base text-gray-400"><small> Radio Rig Rusak </small></span></a>
+
+
+                     <a class="nav-link" href="<?= base_url('ht'); ?>">
+                    <i class="fas fa-fw fa-file text-gray-400"></i>
+                    <span class="data-base text-gray-400"><small> Repair Radio HT </small></span></a>
+
+                       <a class="nav-link" href="<?= base_url('gsjob'); ?>">
+                    <i class="fas fa-fw fa-file text-gray-400"></i>
+                    <span class="data-base text-gray-400"><small> General Jobdesk </small></span></a>
+
+                    </div>
+                </div>   
             </li>
 
              <!-- Divider -->
-            <hr class="sidebar-divider ">
+            <hr class="sidebar-divider border-secondary">
 
                   <!-- New Item Logout -->
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('logout'); ?>">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span class="logout text-danger">Logout</span></a>
+                    <i class="fas fa-sign-out-alt text-danger"></i>
+                    <span class="logout text-gray-500"><b> Logout </b></span></a>
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            <hr class="sidebar-divider d-none d-md-block border-secondary">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
+               
 
         </ul>
