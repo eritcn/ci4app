@@ -32,27 +32,27 @@
   <thead class="thead-outline-dark">
       <tr>
       <th scope="col">No.</th>
+      <th scope="col">Dokumentasi</th>
       <th scope="col">Tanggal</th>
       <th scope="col">Merek</th>
       <th scope="col">Tipe</th>
       <th scope="col">Nomor Seri</th>
       <th scope="col">Kelengkapan</th>
-       <th scope="col">Dokumentasi</th>
-       <th scope="col">Rincian</th>
+      <th scope="col">Rincian</th>
     </tr>
     
   </thead> 
   <tbody class="table-group-divider">
-    <?php $i =1 + (6 * ($currentPage - 1)); ?>
+    <?php $i =1 + (8 * ($currentPage - 1)); ?>
     <?php foreach($rigrfu as $r) : ?>
      <tr>
       <th scope="row"><?=$i++; ?></th>
+      <td><img src="/uploads/<?= $r['keterangan']; ?>" alt="" class="doc" ></td>
       <td><?= $r['date']; ?></td>
       <td><?= $r['tanggal']; ?></td>
       <td><?=$r['lokasi']; ?></td>
       <td><?= $r['slug']; ?></td>
       <td><?=$r['status']; ?></td>
-       <td><img src="/uploads/<?= $r['keterangan']; ?>" alt="" class="doc" ></td>
       <td>
         <a href="/rigrfu/<?= $r['slug']; ?>" class="btn btn-outline-secondary btn-sm text-secondary ">Detail</a>
       </td>

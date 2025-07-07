@@ -24,7 +24,7 @@ class Rigrfu extends BaseController
 
           $data = [
             'title' => 'Daftar Rig Rfu',
-            'rigrfu' => $rigrfu->paginate(6, 'rigrfu'),
+            'rigrfu' => $rigrfu->paginate(8, 'rigrfu'),
             'pager' => $this->rigrfuModel->pager,
             'currentPage' => $currentPage
             // 'gsjob' => $this->rigrfuModel->findAll()
