@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-10">
             <h4 class="my-3 text-dark"><b> Form Tambah Data Radio Rig Ready Stock</b></h4>
-        <form action="/rigrfu/save" method="post">
+        <form action="/rigrfu/save" method="post" enctype="multipart/form-data">
 
         <?= csrf_field(); ?>
 
@@ -15,14 +15,14 @@
           <div class="row mb-3">
     <label for="date" class="col-sm-2 col-form-label text-dark">Tanggal Update</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('date')) ? 'is-invalid' : '' ?>" id="date" name="date" placeholder="01/01/2025 [ contoh ]" autofocus>
+      <input type="date" class="form-control border-dark text-dark <?= ($validation->hasError('date')) ? 'is-invalid' : '' ?>" id="date" name="date" placeholder="01/01/2025 [ contoh ]" autofocus>
          <div id="validationServer03Feedback" class="invalid-feedback">
         Silahkan masukkan tanggal/bulan/tahun.
       </div>
     </div>
   </div>
           <div class="row mb-3">
-    <label for="tanggal" class="col-sm-2 col-form-label text-dark ">Merk</label>
+    <label for="tanggal" class="col-sm-2 col-form-label text-dark ">Merek</label>
     <div class="col-sm-10">
       <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('tanggal')) ? 'is-invalid' : '' ?>" id="tanggal" name="tanggal" placeholder="Motorola [ contoh ]" >
          <div id="validationServer03Feedback" class="invalid-feedback">
@@ -32,7 +32,7 @@
   </div>
 
       <div class="row mb-3">
-    <label for="lokasi" class="col-sm-2 col-form-label text-dark">Type</label>
+    <label for="lokasi" class="col-sm-2 col-form-label text-dark">Tipe</label>
     <div class="col-sm-10">
       <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('lokasi')) ? 'is-invalid' : '' ?>" id="lokasi" name="lokasi" placeholder="GM338 [ contoh ]">
          <div id="validationServer03Feedback" class="invalid-feedback">
@@ -42,7 +42,7 @@
   </div>
 
           <div class="row mb-3">
-    <label for="slug" class="col-sm-2 col-form-label text-dark">Serial Number</label>
+    <label for="slug" class="col-sm-2 col-form-label text-dark">Nomor seri</label>
     <div class="col-sm-10">
       <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('slug')) ? 'is-invalid' : '' ?>" id="slug" name="slug" placeholder="103ABCD1234 [ contoh ]">
          <div id="validationServer03Feedback" class="invalid-feedback">
@@ -75,9 +75,9 @@
   <div class="row mb-3">
     <label for="keterangan" class="col-sm-2 col-form-label text-dark">Dokumentasi</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('keterangan')) ? 'is-invalid' : '' ?>" id="keterangan" name="keterangan" placeholder="Upload photo / gambar">
+      <input type="file" class="form-control border-dark text-dark <?= ($validation->hasError('keterangan')) ? 'is-invalid' : '' ?>" id="keterangan" name="keterangan">
          <div id="validationServer03Feedback" class="invalid-feedback">
-        Silahkan masukkan foto bukti radio rig.
+        <?= $validation->getError('keterangan') ?>
       </div>
     </div>
   </div>

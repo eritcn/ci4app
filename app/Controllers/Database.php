@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+// use App\Models\DatabaseModel;
+
 class Database extends BaseController
 {  
     protected $databaseModel;
@@ -11,21 +13,22 @@ class Database extends BaseController
     }
       public function index(): string
       {
-        // $gsjob = $this-> gsjobModel->findAll();
 
+         $currentPage = $this->request->getVar('page_database') ? $this->request->getVar('page_database') : 1;
+    
+       $keyword = $this->request->getVar('keyword');
+       if($keyword) {
+       $database = $this->databaseModel->search($keyword);
+       } else {
+        $database = $this->databaseModel;
+       }
+        
         $data = [
-            'title' => 'Database Radio Unit',
-            'database' => $this->databaseModel->getDatabase()
-        ];
-
-      
-       
-
-    //     $db = \Config\Database::connect();
-    //     $gsjob = $db->query("SELECT * FROM gsjob");
-    //    foreach($gsjob->getResultArray() as $row) {
-    //     d($row);
-    //    }
+             'title' => 'Daftar Sparepart',
+            'database' => $database->paginate(6, 'database'),
+            'pager' => $this->databaseModel->pager,
+            'currentPage' => $currentPage
+        ];    
 
         return view('database' , $data);
         
@@ -48,47 +51,118 @@ class Database extends BaseController
      }
 
      public function create()
-     {
+     {  
+        session();
         $data = [
-            'title' => 'Form Tambah Data Radio Unit',
+            'title' => 'Form Tambah Data Sparepart',
              'validation' => \Config\Services::validation()
         ];
 
         return view('database/create', $data);
      }
-
+     
+     
      public function save()
      {
 
               if(!$this->validate([
-            'slug' => 'required|is_unique[gsjob.slug]',
+            'slug' => 'required|is_unique[database.slug]',
             'tanggal' => 'required',
             'lokasi' => 'required',
             'status' => 'required',
             'jenis_pekerjaan' => 'required',
-            'keterangan' => 'required',
-            'date' => 'required'
+            'date' => ['required',
+            'errors' => ['required' => '{field} Tanggal harus diisi'] ],
+            'keterangan' => [
+                'rules' => 'uploaded[keterangan]|max_size[keterangan,5000]|is_image[keterangan]',
+                'errors' => [
+                    'uploaded' => 'Pilih gambar terlebih dahulu',
+                    'max_size' => 'Ukuran gambar terlalu besar',
+                    'is_image' => 'Yang anda pilih bukan gambar',
+                    'mime_in' => 'Format gambar harus JPG/JPEG/PNG'
+                ]
+            ]
+            
         ])) {
-
+      
              $validation = \Config\Services::validation();
               $data['validation'] = $validation;
-            return view ('/database/create', $data);
-        }
+            return view ('/database/create', $data);  
+         }
 
-        $slug = url_title($this->request->getVar('slug'), '', false);
+        $fileGambar = $this->request->getFile('keterangan');
+        $namaFile = $fileGambar->getRandomName();
+        $fileGambar->move('uploads', $namaFile);
+
+        $slug = url_title($this->request->getVar('slug'), ' ', false);
         $this->databaseModel->save([
-            'date' => $this->request->getVar('date'),
+            // 'date' => $this->request->getVar('date'),
             'jenis_pekerjaan' => $this->request->getVar('jenis_pekerjaan'),
             'slug' => $slug,
             'tanggal' => $this->request->getVar('tanggal'),
             'lokasi' => $this->request->getVar('lokasi'),
-            'keterangan' => $this->request->getVar('keterangan'),
+            'keterangan' => $namaFile,
             'status' => $this->request->getVar('status')
         ]);
 
           session()->setFlashdata('pesan', 'DATA BERHASIL DITAMBAHKAN');
 
         return redirect()->to('/database');
-
      }
+
+     public function delete($id)
+     {
+        $database = $this->databaseModel->find($id);
+        unlink('uploads/' . $database['keterangan']);
+        $this->databaseModel->delete($id);
+         session()->setFlashdata('pesan', 'DATA BERHASIL DIHAPUS');
+        return redirect()->to('/database');
+     }
+
+     public function edit($slug)
+     {
+            $data = [
+            'title' => 'Form Ubah Data Sparepart',
+             'validation' => \Config\Services::validation(),
+             'database' => $this->databaseModel->getDatabase($slug),
+        ];
+
+        return view('database/edit', $data); 
+     }
+
+     public function update($id)
+     {
+          $slug = url_title($this->request->getVar('slug'), ' ', false);
+
+          $dataLama =$this->databaseModel->find($id);
+
+          $fileGambar = $this->request->getFile('keterangan');
+
+          if ($fileGambar && $fileGambar->isValid() && !$fileGambar->hasMoved()) {
+            $namaGambarBaru = $fileGambar->getRandomName();
+            $fileGambar->move('uploads/' , $namaGambarBaru);
+
+            if (!empty($dataLama['keterangan']) && file_exists('uploads/' . $dataLama['keterangan'])) {
+                unlink('uploads/' . $dataLama['keterangan']);
+            }
+          } else {
+            $namaGambarBaru = $dataLama['keterangan'];
+          }
+
+        $this->databaseModel->save([
+            'id' => $id,
+            'date' => $this->request->getVar('date'),
+            'jenis_pekerjaan' => $this->request->getVar('jenis_pekerjaan'),
+            'slug' => $slug,
+            'tanggal' => $this->request->getVar('tanggal'),
+            'lokasi' => $this->request->getVar('lokasi'),
+            'keterangan' => $namaGambarBaru,
+            'status' => $this->request->getVar('status')
+        ]);
+
+          session()->setFlashdata('pesan', 'DATA BERHASIL DI UBAH');
+
+        return redirect()->to('/database');
+     }
+
 }

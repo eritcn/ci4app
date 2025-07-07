@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-10">
             <h4 class="my-3 text-dark"><b> Form Tambah Data Perbaikan Radio HT</b></h4>
-        <form action="/ht/save" method="post">
+        <form action="/ht/save" method="post" enctype="multipart/form-data">
 
         <?= csrf_field(); ?>
 
@@ -15,7 +15,7 @@
           <div class="row mb-3">
     <label for="date" class="col-sm-2 col-form-label text-dark">Tanggal</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('date')) ? 'is-invalid' : '' ?>" id="date" name="date" placeholder="01/01/2005 [ contoh ]" autofocus>
+      <input type="date" class="form-control border-dark text-dark <?= ($validation->hasError('date')) ? 'is-invalid' : '' ?>" id="date" name="date" placeholder="01/01/2005 [ contoh ]" autofocus>
           <div id="validationServer03Feedback" class="invalid-feedback">
         Silahkan masukkan tanggal/bulan/tahun.
       </div>
@@ -75,9 +75,9 @@
   <div class="row mb-3">
     <label for="keterangan" class="col-sm-2 col-form-label text-dark">Dokumentasi</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('keterangan')) ? 'is-invalid' : '' ?>" id="keterangan" name="keterangan" placeholder="Upload photo / gambar">
+      <input type="file" class="form-control border-dark text-dark <?= ($validation->hasError('keterangan')) ? 'is-invalid' : '' ?>" id="keterangan" name="keterangan">
           <div id="validationServer03Feedback" class="invalid-feedback">
-        Silahkan masukkan foto bukti radio ht.
+          <?= $validation->getError('keterangan') ?>
       </div>
     </div>
   </div>

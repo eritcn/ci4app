@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h4 class="mt-4"><b> Detail Radio Rig </b></h4>
+            <h4 class="mt-4"><b> Detail Radio Rig Rfu</b></h4>
             <div class="card mb-3 " style="max-width: 1200px;">
   <div class="row g-0">
     <div class="col-md-7 mt-4 ml-4 mr-4 mb-4">
-      <img src="/img/<?= $rigrfu['keterangan']; ?>" style=" width: 600px; height: 400px;" class="img-fluid rounded-start" alt="...">
+      <img src="/uploads/<?= $rigrfu['keterangan']; ?>" style=" width: 600px; height: 400px;" class="img-fluid rounded-start" alt="...">
     </div>
     <div class="col-md-4">
       <div class="card-body mr-2">
@@ -21,15 +21,20 @@
 
        <?php if (in_groups('admin')) : ?>
 
-        <a href="" class="btn btn-primary btn-sm">Edit</a>
-        <a href="" class="btn btn-danger btn-sm">Delete</a>
-         <br><br>
+        <a href="/rigrfu/edit/<?= $rigrfu['slug'] ?>" class="btn btn-primary btn-sm">Ubah</a>
+
+         <form action="/rigrfu/<?= $rigrfu['id'] ?>" method="post" class="d-inline">
+          <?= csrf_field() ?>
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</button>
+         </form>
+
+         <br>
          
         <?php endif; ?>
-      
-        <a href="/rigrfu" ><small class="back text"><< back to ready stock</small></a> 
+      <br><br>
+        <a href="/rigrfu" ><small class="back text"><< balik kehalaman radio rig rfu</small></a> 
       </div>
-       <p class="card-title ml-3 mt-4 text-gray-500"><small>Terakhir di update :  <?= $rigrfu['created_at']; ?> </small></p>
     </div>
   </div>
 </div>

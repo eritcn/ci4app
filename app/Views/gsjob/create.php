@@ -8,7 +8,7 @@
          
             <h4 class="my-3 text-dark"><b> Form Tambah Data Pekerjaan</b></h4>
         
-        <form action="/gsjob/save" method="post">
+        <form action="/gsjob/save" method="post" enctype="multipart/form-data">
 
         <?= csrf_field(); ?>
 
@@ -17,7 +17,7 @@
           <div class="row mb-3">
     <label for="tanggal" class="col-sm-2 col-form-label text-dark">Tanggal</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('tanggal')) ? 'is-invalid' : '' ?>" id="tanggal" name="tanggal" value="<?= old('tanggal') ?>" placeholder="01/01/2025 [ contoh ]" autofocus value="<?= old('tanggal'); ?>">
+      <input type="date" class="form-control border-dark text-dark <?= ($validation->hasError('tanggal')) ? 'is-invalid' : '' ?>" id="tanggal" name="tanggal"  placeholder="01/01/2025 [ contoh ]" autofocus >
         <div id="validationServer03Feedback" class="invalid-feedback">
         Silahkan masukkan tanggal/bulan/tahun.
       </div>
@@ -67,9 +67,10 @@
   <div class="row mb-3">
     <label for="keterangan" class="col-sm-2 col-form-label text-dark">Dokumentasi</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control border-dark text-dark <?= ($validation->hasError('keterangan')) ? 'is-invalid' : '' ?>" id="keterangan" name="keterangan" placeholder="Upload photo / gambar">
+      <input type="file" class="form-control border-dark text-dark <?= ($validation->hasError('keterangan')) ? 'is-invalid' : '' ?>" id="keterangan" name="keterangan" >
+      
        <div id="validationServer03Feedback" class="invalid-feedback">
-        Silahkan masukkan foto/gambar hasil pekerjaan.
+        <?= $validation->getError('keterangan') ?>
       </div>
     </div>
   </div>

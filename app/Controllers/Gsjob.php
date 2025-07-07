@@ -11,22 +11,27 @@ class Gsjob extends BaseController
     }
       public function index(): string
       {
-        // $gsjob = $this-> gsjobModel->findAll();
+
+       $currentPage = $this->request->getVar('page_gsjob') ? $this->request->getVar('page_gsjob') : 1;
+    
+       $keyword = $this->request->getVar('keyword');
+       if($keyword) {
+       $gsjob = $this->gsjobModel->search($keyword);
+       } else {
+        $gsjob = $this->gsjobModel;
+       }
+    //  d($this->request->getVar('keyword'));
 
         $data = [
             'title' => 'Daftar Job',
-            'gsjob' => $this->gsjobModel->getGsjob()
+            'gsjob' => $gsjob->paginate(6, 'gsjob'),
+            'pager' => $this->gsjobModel->pager,
+            'currentPage' => $currentPage
+            // 'gsjob' => $this->gsjobModel->findAll()
+            // 'gsjob' => $this->gsjobModel->getGsjob()
         ];
 
       
-       
-
-    //     $db = \Config\Database::connect();
-    //     $gsjob = $db->query("SELECT * FROM gsjob");
-    //    foreach($gsjob->getResultArray() as $row) {
-    //     d($row);
-    //    }
-
         return view('gsjob' , $data);
         
     }
@@ -49,7 +54,7 @@ class Gsjob extends BaseController
 
      public function create()
      {
-        // session();
+        session();
         $data = [
             'title' => 'Form Tambah Data Job',
             'validation' => \Config\Services::validation()
@@ -68,15 +73,26 @@ class Gsjob extends BaseController
             'lokasi' => 'required',
             'status' => 'required',
             'jenis_pekerjaan' => 'required',
-            'keterangan' => 'required'
+               'keterangan' => [
+                'rules' => 'uploaded[keterangan]|max_size[keterangan,6000]|is_image[keterangan]',
+                'errors' => [
+                    'uploaded' => 'Pilih gambar terlebih dahulu',
+                    'max_size' => 'Ukuran gambar terlalu besar',
+                    'is_image' => 'Yang anda pilih bukan gambar',
+                    'mime_in' => 'Format gambar harus JPG/JPEG/PNG'
+                ]
+            ]
         ])) {
 
             $validation = \Config\Services::validation();
-      
-            // return redirect()->to('/gsjob/create')->withInput()->with('validation', $validation);
+            // dd(\Config\Services::validation()->listErrors());
             $data['validation'] = $validation;
             return view('/gsjob/create',$data);
         }
+
+           $fileGambar = $this->request->getFile('keterangan');
+        $namaFile = $fileGambar->getRandomName();
+        $fileGambar->move('uploads', $namaFile);
 
         $slug = url_title($this->request->getVar('slug'), ' ',  false);
         $this->gsjobModel->save([
@@ -84,13 +100,67 @@ class Gsjob extends BaseController
             'slug' => $slug,
             'tanggal' => $this->request->getVar('tanggal'),
             'lokasi' => $this->request->getVar('lokasi'),
-            'keterangan' => $this->request->getVar('keterangan'),
+            'keterangan' => $namaFile,
             'status' => $this->request->getVar('status')
         ]);
 
         session()->setFlashdata('pesan', 'DATA BERHASIL DITAMBAHKAN');
         
         return redirect()->to('/gsjob');
+     }
 
+     
+     public function delete($id)
+     {  
+          $gsjob = $this->gsjobModel->find($id);
+        unlink('uploads/' . $gsjob['keterangan']);
+        $this->gsjobModel->delete($id);
+         session()->setFlashdata('pesan', 'DATA BERHASIL DIHAPUS');
+        return redirect()->to('/gsjob');
+     }
+
+           public function edit($slug)
+     {
+            $data = [
+            'title' => 'Form Ubah Data GS Job',
+             'validation' => \Config\Services::validation(),
+             'gsjob' => $this->gsjobModel->getGsjob($slug)
+        ];
+
+        return view('gsjob/edit', $data); 
+     }
+
+        public function update($id)
+     {
+          $slug = url_title($this->request->getVar('slug'), ' ', false);
+
+               $dataLama =$this->gsjobModel->find($id);
+
+          $fileGambar = $this->request->getFile('keterangan');
+
+          if ($fileGambar && $fileGambar->isValid() && !$fileGambar->hasMoved()) {
+            $namaGambarBaru = $fileGambar->getRandomName();
+            $fileGambar->move('uploads/' , $namaGambarBaru);
+
+            if (!empty($dataLama['keterangan']) && file_exists('uploads/' . $dataLama['keterangan'])) {
+                unlink('uploads/' . $dataLama['keterangan']);
+            }
+          } else {
+            $namaGambarBaru = $dataLama['keterangan'];
+          }
+
+        $this->gsjobModel->save([
+            'id' => $id,
+            'jenis_pekerjaan' => $this->request->getVar('jenis_pekerjaan'),
+            'slug' => $slug,
+            'tanggal' => $this->request->getVar('tanggal'),
+            'lokasi' => $this->request->getVar('lokasi'),
+            'keterangan' => $namaGambarBaru,
+            'status' => $this->request->getVar('status')
+        ]);
+
+          session()->setFlashdata('pesan', 'DATA BERHASIL DI UBAH');
+
+        return redirect()->to('/gsjob');
      }
 }

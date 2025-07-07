@@ -9,12 +9,20 @@
                      
                     <h3 class="h4 mb-2 text-dark"><b> Data Stock Sparepart </b></h3>
 
-                    <hr class="sidebar-divider border-secondary">
+                  
           
                     <div class="row">
-                        <div class="col-lg-10"> 
-                          
-       <a href="/database/create" class="btn btn-outline-secondary mb-1 btn-sm"><i class="fas fa-plus text-sm"></i> DATA</a>                 
+                        <div class="col-lg-11"> 
+                          <form action="" method="get" class="d-inline">   
+                              <div class="input-group mb-3 input-group-sm">
+  <input type="text" class="form-control " placeholder="Masukkan keyword pencarian" name="keyword">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="submit" name="submit" ><i class="fas fa-search"></i></button>
+  </div>
+</div>
+</form>     
+  <hr class="sidebar-divider border-secondary">                     
+       <a href="/database/create" class="btn btn-outline-secondary mb-1 btn-sm">Tambah data</a>                 
            <?php if(session()->getFlashdata('pesan')) : ?>     
         <div class="alert alert-success" role="alert">
 <b> <?= session()->getFlashdata('pesan'); ?> </b>
@@ -28,8 +36,8 @@
       <th scope="col">No.</th>
       <th scope="col">Tanggal</th>
       <th scope="col">Dokumentasi</th>
-      <th scope="col">Nama Sparepart</th>
-      <th scope="col">Type Sparepart</th>
+      <th scope="col">Nama sparepart</th>
+      <th scope="col">Nomor sparepart</th>
       <th scope="col">Lokasi</th>
       <th scope="col">Jumlah</th>
       <th scope="col">Rincian</th>
@@ -41,7 +49,7 @@
      <tr>
       <th scope="row"><?=$i++; ?></th>
       <td><?= $d['date']; ?></td>
-      <td><img src="/img/<?= $d['keterangan']; ?>" alt="" class="doc" ></td>
+      <td><img src="/uploads/<?= $d['keterangan']; ?>" alt="" class="doc" ></td>
       <td><?= $d['tanggal']; ?></td>
       <td><?= $d['slug']; ?></td>
       <td><?=$d['lokasi']; ?></td>
@@ -53,6 +61,8 @@
     <?php endforeach ?>
   </tbody>
 </table>
+
+<?= $pager->links('database', 'ci4app_pagination'); ?>
 
                         </div>
                     </div>

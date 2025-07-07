@@ -15,7 +15,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white small"><span class="login text-info"><i class="fas fa-sign-in-alt"></i>  Login : </span>  <?= user()->username; ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-white small"><span class="login text-info"><i class="fas fa-sign-in-alt"></i><b> [ Login ]</b>  </span>  <?= user()->username; ?></span>
                                  <img class="img-profile rounded-circle"
                                     src="<?= base_url('img/inst1.png'); ?>" >
                             </a>
@@ -24,14 +24,14 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    My Profile
+                                    Profil Saya
                                     
                                 </a>
                         
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Mau Keluar ?
                                 </a>
                             </div>
                         </li>

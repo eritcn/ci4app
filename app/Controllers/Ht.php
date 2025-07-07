@@ -11,21 +11,25 @@ class Ht extends BaseController
     }
       public function index(): string
       {
-        // $gsjob = $this-> gsjobModel->findAll();
+       
+          $currentPage = $this->request->getVar('page_ht') ? $this->request->getVar('page_ht') : 1;
+    
+       $keyword = $this->request->getVar('keyword');
+       if($keyword) {
+       $ht = $this->htModel->search($keyword);
+       } else {
+        $ht = $this->htModel;
+       }
 
-        $data = [
-            'title' => 'Data Repair ',
-            'ht' => $this->htModel->getHt()
+          $data = [
+            'title' => 'Daftar Repair HT',
+            'ht' => $ht->paginate(6, 'ht'),
+            'pager' => $this->htModel->pager,
+            'currentPage' => $currentPage
+            // 'gsjob' => $this->rigrfuModel->findAll()
+            // 'gsjob' => $this->rigrfuModel->getGsjob()
         ];
 
-      
-       
-
-    //     $db = \Config\Database::connect();
-    //     $gsjob = $db->query("SELECT * FROM gsjob");
-    //    foreach($gsjob->getResultArray() as $row) {
-    //     d($row);
-    //    }
 
         return view('ht' , $data);
         
@@ -59,19 +63,31 @@ class Ht extends BaseController
 
      public function save()
      {
-              if(!$this->validate([
-            'slug' => 'required|is_unique[gsjob.slug]',
+               if(!$this->validate([
+            'slug' => 'required|is_unique[ht.slug]',
             'tanggal' => 'required',
             'lokasi' => 'required',
             'status' => 'required',
             'jenis_pekerjaan' => 'required',
-            'keterangan' => 'required',
-            'date' => 'required'
+            'keterangan' => [
+                'rules' => 'uploaded[keterangan]|max_size[keterangan,5000]|is_image[keterangan]',
+                'errors' => [
+                    'uploaded' => 'Pilih gambar terlebih dahulu',
+                    'max_size' => 'Ukuran gambar terlalu besar',
+                    'is_image' => 'Yang anda pilih bukan gambar',
+                    'mime_in' => 'Format gambar harus JPG/JPEG/PNG'
+                ]
+            ]
         ])) {
              $validation = \Config\Services::validation();
               $data['validation'] = $validation;
             return view ('/ht/create', $data);
         }
+
+               $fileGambar = $this->request->getFile('keterangan');
+        $namaFile = $fileGambar->getRandomName();
+        $fileGambar->move('uploads', $namaFile);
+
 
         $slug = url_title($this->request->getVar('slug'), '', false);
         $this->htModel->save([
@@ -80,11 +96,65 @@ class Ht extends BaseController
             'slug' => $slug,
             'tanggal' => $this->request->getVar('tanggal'),
             'lokasi' => $this->request->getVar('lokasi'),
-            'keterangan' => $this->request->getVar('keterangan'),
+            'keterangan' => $namaFile,
             'status' => $this->request->getVar('status')
         ]);
          session()->setFlashdata('pesan', 'DATA BERHASIL DITAMBAHKAN');
         return redirect()->to('/ht');
+     }
 
+            public function delete($id)
+     {  
+         $ht = $this->htModel->find($id);
+        unlink('uploads/' . $ht['keterangan']);
+        $this->htModel->delete($id);
+         session()->setFlashdata('pesan', 'DATA BERHASIL DIHAPUS');
+        return redirect()->to('/ht');
+     }
+
+      public function edit($slug)
+     {
+            $data = [
+            'title' => 'Form Ubah Data Radio Ht',
+             'validation' => \Config\Services::validation(),
+             'ht' => $this->htModel->getHt($slug)
+        ];
+
+        return view('ht/edit', $data); 
+     }
+
+        public function update($id)
+     {
+          $slug = url_title($this->request->getVar('slug'), ' ', false);
+
+              $dataLama =$this->htModel->find($id);
+
+          $fileGambar = $this->request->getFile('keterangan');
+
+          if ($fileGambar && $fileGambar->isValid() && !$fileGambar->hasMoved()) {
+            $namaGambarBaru = $fileGambar->getRandomName();
+            $fileGambar->move('uploads/' , $namaGambarBaru);
+
+            if (!empty($dataLama['keterangan']) && file_exists('uploads/' . $dataLama['keterangan'])) {
+                unlink('uploads/' . $dataLama['keterangan']);
+            }
+          } else {
+            $namaGambarBaru = $dataLama['keterangan'];
+          }
+
+        $this->htModel->save([
+            'id' => $id,
+            'date' => $this->request->getVar('date'),
+            'jenis_pekerjaan' => $this->request->getVar('jenis_pekerjaan'),
+            'slug' => $slug,
+            'tanggal' => $this->request->getVar('tanggal'),
+            'lokasi' => $this->request->getVar('lokasi'),
+            'keterangan' => $namaGambarBaru,
+            'status' => $this->request->getVar('status')
+        ]);
+
+          session()->setFlashdata('pesan', 'DATA BERHASIL DI UBAH');
+
+        return redirect()->to('/ht');
      }
 }

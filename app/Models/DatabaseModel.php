@@ -20,4 +20,13 @@ class DatabaseModel extends Model
               return $this->where(['slug' => $slug] )->first();
        }
           
+        public function search($keyword)
+       {
+              // $builder = $this->table('gsjob');
+              // $builder->like('slug', $keyword);
+              // return $builder;
+
+              return $this->table('database')->like('slug', $keyword)->orLike('status', $keyword)->orLike('date', $keyword)->orLike('tanggal', $keyword)->orLike('lokasi', $keyword);
+       }
+
 }
