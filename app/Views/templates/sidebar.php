@@ -1,15 +1,16 @@
-  <ul class="navbar-nav bg-gray-900 sidebar sidebar-dark accordion"  id="accordionSidebar" >
+
+  <ul  class="navbar-nav bg-gray-900 sidebar sidebar-dark accordion"  id="accordionSidebar" >
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-0">
-                    <i class="fas fa-mug-hot text-gray-100 text-sm"></i>
+                    <i class="fas fa-mug-hot text-gray-500 text-sm"></i>
                 </div>
-                <div class="sidebar-brand-text mx-1 text-info">Kopi - Susu<sup class="sup text-gray-100 text-12px">++</sup></div>
+                <div class="sidebar-brand-text mx-1 text-info">Kopi - Susu<sup class="sup text-gray-500 text-12px">++</sup></div>
             </a>
 
                 <!-- Divider -->
-            <hr class="sidebar-divider border-gray">
+            <hr class="sidebar-divider border-gray-700">
 
 <?php if (in_groups('admin')) : ?>
             <!-- Heading -->
@@ -25,7 +26,7 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider border-gray">
+            <hr class="sidebar-divider border-gray-700">
 <?php endif; ?>
             <!-- Heading -->
             <div class="sidebar-heading text-gray-800">
@@ -39,7 +40,7 @@
                     <span class="my-profile text-gray-600"><b> Profil Saya Gaes</b></span></a>
             </li>
 
-            <hr class="sidebar-divider border-gray">
+            <hr class="sidebar-divider border-gray-700">
 
             <!-- New Item Data Base -->
                <div class="sidebar-heading text-gray-800">
@@ -53,11 +54,10 @@
                     <span class="pages text-gray-600"> Halaman Data</span>
                 </a>   
 
-                <div id="collapsePages" class="collapse " aria-labelledby="headingPages"
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
-                    <div class="bg-gray-100 py-0 collapse-inner rounded">
 
-                    
+                    <div class="bg-gray-100 py-0 collapse-inner rounded">
                           <a class="nav-link" href="<?= base_url('database'); ?>">
                     <i class="fas fa-fw fa-file text-gray-700"></i>
                     <span class="data-base text-gray-700"><small> Stock Sparepart </small></span></a>
@@ -76,6 +76,7 @@
                     <i class="fas fa-fw fa-file text-gray-700"></i>
                     <span class="data-base text-gray-700"><small> Perbaikan Radio HT </small></span></a>
 
+
                        <a class="nav-link" href="<?= base_url('gsjob'); ?>">
                     <i class="fas fa-fw fa-file text-gray-700"></i>
                     <span class="data-base text-gray-700"><small> Pekerjaan General </small></span></a>
@@ -85,8 +86,9 @@
             </li>
 
              <!-- Divider -->
-            <hr class="sidebar-divider border-gray">
+            <hr class="sidebar-divider border-gray-700">
 
+            
                   <!-- New Item Logout -->
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('logout'); ?>">
@@ -95,13 +97,12 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block border-gray">
+            <hr class="sidebar-divider d-none d-md-block border-gray-700">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-               
+            </div>      
 
         </ul>
+    

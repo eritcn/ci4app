@@ -31,7 +31,7 @@
  <?php endif ?>  
 
 
-
+<div class="table-responsive">
 <table class="table table-bordered table-striped table-sm">
   <thead class="thead-outline-dark">
       <tr>
@@ -47,7 +47,7 @@
     
   </thead> 
   <tbody class="table-group-divider">
- <?php $i =1 + (6 * ($currentPage - 1)); ?>
+ <?php $i =1 + (8 * ($currentPage - 1)); ?>
     <?php foreach($ht as $h) : ?>
      <tr>
       <th scope="row"><?=$i++; ?></th>
@@ -64,7 +64,7 @@
     <?php endforeach ?>
   </tbody>
 </table>
-
+</div>
 <?= $pager->links('ht', 'ci4app_pagination'); ?>
                         </div>
                     </div>

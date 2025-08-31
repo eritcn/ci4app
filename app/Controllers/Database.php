@@ -25,7 +25,7 @@ class Database extends BaseController
         
         $data = [
              'title' => 'Daftar Sparepart',
-            'database' => $database->paginate(6, 'database'),
+            'database' => $database->paginate(5, 'database'),
             'pager' => $this->databaseModel->pager,
             'currentPage' => $currentPage
         ];    

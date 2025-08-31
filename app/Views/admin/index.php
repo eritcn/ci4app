@@ -8,7 +8,8 @@
                     <h3 class="h3 mb-4 text-info"><b> User List </b></h3>
                     <div class="row">
                         <div class="col-lg-11">
-                           <table class="table table-bordered table-striped table-sm">
+<div class="table-responsive">                         
+<table class="table table-bordered table-striped table-sm">
   <thead class="th text-dark th-sm">
     <tr>
       <th scope="col">No.</th>
@@ -35,6 +36,7 @@
  <?php endforeach; ?>
   </tbody>
 </table> 
+</div> 
                         </div>
                     </div>
                 </div>

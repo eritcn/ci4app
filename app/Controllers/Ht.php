@@ -23,7 +23,7 @@ class Ht extends BaseController
 
           $data = [
             'title' => 'Daftar Repair HT',
-            'ht' => $ht->paginate(6, 'ht'),
+            'ht' => $ht->paginate(5, 'ht'),
             'pager' => $this->htModel->pager,
             'currentPage' => $currentPage
             // 'gsjob' => $this->rigrfuModel->findAll()

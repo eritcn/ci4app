@@ -69,3 +69,9 @@ $routes->get('/user/index', 'User::index', ['filter' => 'role:user']);
 $routes->get('/admin', 'Admin::index', ['filter' => 'role:admin']);
 $routes->get('/admin/index', 'Admin::index', ['filter' => 'role:admin']);
 $routes->get('/admin/(:num)', 'Admin::detail/$1', ['filter' => 'role:admin']);
+
+$routes->get('/test-excel', 'ExcelTest::export');
+
+// Routes.php
+$routes->get('/export-users', 'ExportController::exportUsers');
+

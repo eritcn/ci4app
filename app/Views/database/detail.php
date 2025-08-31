@@ -8,7 +8,7 @@
             <h4 class="mt-4"> <b>Detail Sparepart</b> </h4>
             <div class="card mb-3 " style="max-width: 1200px;">
   <div class="row g-0">
-    <div class="col-md-7 mt-4 ml-4 mr-4 mb-4">
+    <div class="col-md-7 mt-4 ml-3 mr-3 mb-4">
       <img src="/uploads/<?= $database['keterangan']; ?>" style=" width: 800px; height: 400px;" class="img-fluid" alt="...">
     </div>
     <div class="col-md-4">

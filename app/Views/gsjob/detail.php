@@ -5,19 +5,19 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h4 class="mt-4"><b> Detail Pekerjaan </b></h4>
-            <div class="card mb-3 " style="max-width: 1200px;">
+            <h4 class="mt-2 "><b> Detail Pekerjaan </b></h4>
+            <div class="card mb-5 " style="max-width: 870px;">
   <div class="row g-0">
-    <div class="col-md-7 mt-3 ml-4 mr-2 mb-4">
+    <div class="col-md-7 mt-3 ml-3 mr-3 mb-3">
       <img src="/uploads/<?= $gsjob['keterangan']; ?>" style=" width: 800px; height: 400px;" class="img-fluid rounded-start" alt="...">
     </div>
-    <div class="col-md-4">
-      <div class="card-body mr-1">
+    <div class="col-md mr-3">
+      <div class="card-body ">
         <h6 class="card-title"> <b></b> <b> <?= $gsjob['slug']; ?> </b></h6>
-        <p class="card-text"><b>Keterangan - </b> <?= $gsjob['jenis_pekerjaan']; ?> </p>
-        <p class="card-title"><b>Tanggal - </b> <?= $gsjob['tanggal']; ?></p>
+        <p class="card-text"><b>Keterangan : </b> <?= $gsjob['jenis_pekerjaan']; ?> </p>
+        <p class="card-title"><b>Tanggal : </b> <?= $gsjob['tanggal']; ?></p>
         
-         <p class="card-title"><b>Status - </b> <?= $gsjob['status']; ?></p>
+         <p class="card-title"><b>Status : </b> <?= $gsjob['status']; ?></p>
 
        <?php if (in_groups('admin')) : ?>
 

@@ -27,7 +27,7 @@
 </div>
 
  <?php endif ?>  
-
+<div class="table-responsive">
 <table class="table table-striped table-bordered table-sm">
   <thead class="thead-outline-dark">
       <tr>
@@ -43,7 +43,7 @@
     
   </thead> 
   <tbody class="table-group-divider">
-    <?php $i =1 + (8 * ($currentPage - 1)); ?>
+    <?php $i =1 + (5 * ($currentPage - 1)); ?>
     <?php foreach($rigrfu as $r) : ?>
      <tr>
       <th scope="row"><?=$i++; ?></th>
@@ -60,7 +60,7 @@
     <?php endforeach ?>
   </tbody>
 </table>
-
+</div>
 <?= $pager->links('rigrfu', 'ci4app_pagination'); ?>
 
                         </div>

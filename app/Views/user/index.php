@@ -18,16 +18,16 @@
       <div class="card-body">
         <ul class="list-group list-group-flush">
     <li class="list-group-item">
-        <h4><span class="nama text-gray-600">My name is  </span>  <?= user()->username;?></h4>
+        <h4><?= user()->username;?></h4>
     </li>
 
     <?php if (user()->fullname) : ?>
-    <li class="list-group-item"><span class="nrp text-gray-600">Nrp > </span>  <?= user()->fullname;?></li>
+    <li class="list-group-item"><?= user()->fullname;?></li>
     <?php endif; ?>
 
-    <li class="list-group-item"><span class="email text-gray-600">Email > </span> <?= user()->email;?></li>
+    <li class="list-group-item"><?= user()->email;?></li>
 
-    <li class="list-group-item"><span class="bio text-gray-600">Bio  </span> <?= user()->biograph;?></li>
+    <li class="list-group-item"><?= user()->biograph;?></li>
   
   </ul>
       </div>

@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-dark">
+<body class="bg-gradient-primary">
 
     <div class="container">
 
@@ -34,12 +34,9 @@
                     <!-- <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> -->
                     <div class="col-lg">
                         <div class="p-5">
-
-                        <div class="text-center">
-                            <h3>Belum Punya Akun?...Yuk</h3>
-                        </div>
                             <div class="text-center">
-                                <h1 class="h4 text-gray-600 mb-4"><?=lang('Auth.register')?></h1>
+                                <h3 class="h3 text-dark">Lom punya akun?...yuk kita</h3>
+                                <h1 class="h4 text-gray-900 mb-4"><?=lang('Auth.register')?></h1>
                             </div>
 
                              <?= view('Myth\Auth\Views\_message_block') ?>
@@ -66,7 +63,7 @@
                                              placeholder="<?=lang('Auth.repeatPassword')?>" autocomplete="off">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-dark btn-user btn-block">
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
                                     <?=lang('Auth.register')?>
                                 </button>
                           

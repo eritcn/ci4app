@@ -2,7 +2,7 @@
 
 <?= $this->section('page-content'); ?>
 
-<div class="container-fluid ml-3">
+<div class="container-fluid">
 
                     <!-- Page Heading -->
                      
@@ -29,7 +29,7 @@
  <?php endif ?> 
                  
 
-
+<div class="table-responsive">
 <table class="table table-striped table-bordered table-sm">
   <thead class="thead outline-dark">
       <tr>
@@ -44,10 +44,10 @@
     
   </thead> 
   <tbody class="table-group-divider">
-    <?php $i =1 + (6 * ($currentPage - 1)); ?>
+    <?php $i =1 + (5 * ($currentPage - 1)); ?>
     <?php foreach($gsjob as $g) : ?>
      <tr>
-      <th scope="row"><?=$i++; ?></th>
+      <td scope="row"><?=$i++; ?></td>
       <td><img src="/uploads/<?= $g['keterangan']; ?>" alt="" class="doc" ></td>
       <td><?= $g['tanggal']; ?></td>
       <td><?=$g['lokasi']; ?></td>
@@ -60,7 +60,7 @@
     <?php endforeach ?>
   </tbody>
 </table>
-
+</div>
 <?= $pager->links('gsjob', 'ci4app_pagination'); ?>
 
 

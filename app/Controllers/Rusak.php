@@ -24,7 +24,7 @@ class Rusak extends BaseController
 
           $data = [
             'title' => 'Daftar Rig Rusak',
-            'rusak' => $rusak->paginate(6, 'rusak'),
+            'rusak' => $rusak->paginate(5, 'rusak'),
             'pager' => $this->rusakModel->pager,
             'currentPage' => $currentPage
             // 'gsjob' => $this->rigrfuModel->findAll()

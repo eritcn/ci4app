@@ -30,11 +30,11 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
+        <!-- Sidebar For Desktop-->
+      
       <?= $this->include('templates/sidebar'); ?>
+       
         <!-- End of Sidebar -->
-
-
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -47,7 +47,11 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+                 <div class="container-fluid">
+             <!-- <main role="main" class="col-md9 ml-sm-auto col-lg-10 px-4"> -->
              <?= $this->renderSection('page-content'); ?>
+          
+             </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -120,7 +124,11 @@
         }
         }
     </script>
-
+     <!-- <script>
+        document.getElementById('sidebarToggleTop').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active')
+        });
+     </script> -->
 
 </body>
 

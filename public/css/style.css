@@ -3,6 +3,8 @@
     height: 30px;
 }
 
+
+
 .table > tbody > tr > * {
     vertical-align: middle;
     font-size: 13px;
@@ -21,4 +23,5 @@
 .container > .row > .col > .card > .row > .col > img {
     height: 40px;
 }
+
 

@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
          
             <h4 class="my-3 text-dark"><b> Form Tambah Data Pekerjaan</b></h4>
         

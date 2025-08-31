@@ -24,7 +24,7 @@ class Gsjob extends BaseController
 
         $data = [
             'title' => 'Daftar Job',
-            'gsjob' => $gsjob->paginate(6, 'gsjob'),
+            'gsjob' => $gsjob->paginate(5, 'gsjob'),
             'pager' => $this->gsjobModel->pager,
             'currentPage' => $currentPage
             // 'gsjob' => $this->gsjobModel->findAll()
@@ -74,7 +74,7 @@ class Gsjob extends BaseController
             'status' => 'required',
             'jenis_pekerjaan' => 'required',
                'keterangan' => [
-                'rules' => 'uploaded[keterangan]|max_size[keterangan,6000]|is_image[keterangan]',
+                'rules' => 'uploaded[keterangan]|max_size[keterangan,7000]|is_image[keterangan]',
                 'errors' => [
                     'uploaded' => 'Pilih gambar terlebih dahulu',
                     'max_size' => 'Ukuran gambar terlalu besar',
