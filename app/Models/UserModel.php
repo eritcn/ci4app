@@ -2,29 +2,27 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-use Faker\Generator;
-use Myth\Auth\Authorization\GroupModel;
-use Myth\Auth\Entities\User;
+use Myth\Auth\Models\UserModel as MythUserModel;
 
-/**
- * @method User|null first()
- */
-class UserModel extends Model
+class UserModel extends MythUserModel
 {
     protected $table          = 'users';
     protected $primaryKey     = 'id';
     protected $returnType     = 'App\Entities\User';
     protected $useSoftDeletes = true;
-    protected $allowedFields  = [
-        'email', 'username', 'password_hash', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
-        'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at',
-    ];
+protected $allowedFields  = [
+    'email', 'username', 'fullname', 'bio', 'user_image',
+    'password_hash', 'reset_hash', 'reset_expires', 'activate_hash',
+    'status', 'status_message', 'active', 'force_pass_reset',
+    'created_at', 'updated_at', 'deleted_at',
+];
+
+    
     protected $useTimestamps   = true;
     protected $validationRules = [
         'email'         => 'required|valid_email|is_unique[users.email,id,{id}]',
         'username'      => 'required|alpha_numeric_punct|min_length[3]|max_length[30]|is_unique[users.username,id,{id}]',
-        'password_hash' => 'required',
+        // 'password_hash' => 'required',
     ];
     protected $validationMessages = [];
     protected $skipValidation     = false;
@@ -113,12 +111,12 @@ class UserModel extends Model
     /**
      * Faked data for Fabricator.
      */
-    public function fake(Generator &$faker): User
-    {
-        return new User([
-            'email'    => $faker->email,
-            'username' => $faker->userName,
-            'password' => bin2hex(random_bytes(16)),
-        ]);
-    }
+    // public function fake(Generator &$faker): User
+    // {
+    //     return new User([
+    //         'email'    => $faker->email,
+    //         'username' => $faker->userName,
+    //         'password' => bin2hex(random_bytes(16)),
+    //     ]);
+    // }
 }

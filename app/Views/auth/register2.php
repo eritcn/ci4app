@@ -9,9 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Form Register</title>
-    
-     <link rel="icon" href="<?= base_url('favicon-new.ico') ?>" type="image/x-icon">
+    <title>Inst Register</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('vendor/fontawesome-free/css/all.min.css');?> "rel="stylesheet" type="text/css">
@@ -21,35 +19,10 @@
 
     <!-- Custom styles for this template-->
    <link href="<?= base_url('css/sb-admin-2.min.css');?> "rel="stylesheet">
-   <style>
-       /*.field-icon {*/
-       /*    float: right;*/
-       /*    margin-left: 235px;*/
-       /*    margin-top: -30px;*/
-       /*    position: relative;*/
-       /*    z-index: 2;*/
-       /*}*/
-       
-            @media(max-width: 576px) {
-           .field-icon {
-               top: 18px !important;
-               right: 35px !important;
-               font-size: 1rem;
-           }
-       }
-       
-       @media(min-width: 577px) {
-           .field-icon {
-               top: 15px;
-               right: 32px;
-               font-size: 1.2rem;
-           }
-       }
-   </style>
 
 </head>
 
-<body class="bg-dark">
+<body class="bg-gradient-primary">
 
     <div class="container">
 
@@ -62,10 +35,8 @@
                     <div class="col-lg">
                         <div class="p-5">
                             <div class="text-center">
-                                       <img class="col-md-4"
-                                    src="<?= base_url('img/daftar.png'); ?>" >
-                                <h3 class="h4 text-gray-700"><b> Belum Punya Akun? Yuk</h4>
-                                <h1 class="h4 text-gray-700 mb-4"><?=lang('Auth.register')?></h1>
+                                <h3 class="h3 text-dark">Lom punya akun?...yuk kita</h3>
+                                <h1 class="h4 text-gray-900 mb-4"><?=lang('Auth.register')?></h1>
                             </div>
 
                              <?= view('Myth\Auth\Views\_message_block') ?>
@@ -82,21 +53,17 @@
                                         placeholder="<?=lang('Auth.email')?>" value="<?= old('email') ?>">
                                         
                                 </div>
-                                <div class="form-group row ">
+                                <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                      
                                         <input type="password" class="form-control form-control-user <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>"
-                                            name="password" id="password" placeholder="<?=lang('Auth.password')?>" autocomplete="off">
-                                             <span toggle="#password" class= "fa fa-fw fa-eye field-icon toggle-password" style="position:absolute; cursor: pointer;"></span>
+                                            name="password" placeholder="<?=lang('Auth.password')?>" autocomplete="off">
                                     </div>
                                     <div class="col-sm-6">
-                                           
-                                        <input type="password" name="pass_confirm" id="pass_confirm" class="form-control form-control-user <?php if (session('errors.pass_confirm')) : ?>is-invalid<?php endif ?>"
+                                        <input type="password" name="pass_confirm" class="form-control form-control-user <?php if (session('errors.pass_confirm')) : ?>is-invalid<?php endif ?>"
                                              placeholder="<?=lang('Auth.repeatPassword')?>" autocomplete="off">
-                                           <span toggle="#pass_confirm" class= "fa fa-fw fa-eye field-icon toggle-password" style="position:absolute; cursor: pointer;"></span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-dark btn-user btn-block">
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
                                     <?=lang('Auth.register')?>
                                 </button>
                           
@@ -113,18 +80,6 @@
         </div>
       </div>
     </div>
-    
-    <script>
-        document.querySelectorAll(".toggle-password").forEach(function(toggle) {
-            toggle.addEventListener("click", function() {
-                const input = document.querySelector(this.getAttribute("toggle"));
-                const type = input.getAttribute("type") === "password" ? "text" : "password";
-                input.setAttribute("type", type);
-                this.classList.toggle("fa-eye");
-                this.classList.toggle("fa-eye-slash");
-            });
-        });
-    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="<?= base_url('vendor/jquery/jquery.min.js');?>"></script>

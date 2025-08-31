@@ -58,46 +58,96 @@ class AuthController extends Controller
         return $this->_render($this->config->views['login'], ['config' => $this->config]);
     }
 
-    /**
-     * Attempts to verify the user's credentials
-     * through a POST request.
-     */
-    public function attemptLogin()
-    {
-        $rules = [
-            'login'    => 'required',
-            'password' => 'required',
-        ];
-        if ($this->config->validFields === ['email']) {
-            $rules['login'] .= '|valid_email';
-        }
+    // /**
+    //  * Attempts to verify the user's credentials
+    //  * through a POST request.
+    //  */
+    // public function attemptLogin()
+    // {
+    //     $rules = [
+    //         'login'    => 'required',
+    //         'password' => 'required',
+    //     ];
+    //     if ($this->config->validFields === ['email']) {
+    //         $rules['login'] .= '|valid_email';
+    //     }
 
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
+    //     if (! $this->validate($rules)) {
+    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    //     }
 
-        $login    = $this->request->getPost('login');
-        $password = $this->request->getPost('password');
-        $remember = (bool) $this->request->getPost('remember');
+    //     $login    = $this->request->getPost('login');
+    //     $password = $this->request->getPost('password');
+    //     $remember = (bool) $this->request->getPost('remember');
 
-        // Determine credential type
-        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    //     // Determine credential type
+    //     $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        // Try to log them in...
-        if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
-            return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
-        }
+    //     // Try to log them in...
+    //     if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
+    //         return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
+    //     }
 
-        // Is the user being forced to reset their password?
-        if ($this->auth->user()->force_pass_reset === true) {
-            return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
-        }
+    //     // Is the user being forced to reset their password?
+    //     if ($this->auth->user()->force_pass_reset === true) {
+    //         return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
+    //     }
 
-        $redirectURL = session('redirect_url') ?? site_url('/');
-        unset($_SESSION['redirect_url']);
+    //     $redirectURL = session('redirect_url') ?? site_url('/');
+    //     unset($_SESSION['redirect_url']);
 
-        return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
+    //     return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
+    // }
+    
+public function attemptLogin()
+{
+    $rules = [
+        'login'    => 'required',
+        'password' => 'required',
+    ];
+    if ($this->config->validFields === ['email']) {
+        $rules['login'] .= '|valid_email';
     }
+
+    if (! $this->validate($rules)) {
+        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    }
+
+    $login    = trim($this->request->getPost('login'));
+    $password = $this->request->getPost('password');
+    $remember = (bool) $this->request->getPost('remember');
+
+    $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+    $users = model(UserModel::class);
+    $user  = $users->where($type, $login)->first();
+
+    if (! $user) {
+        return redirect()->back()->withInput()->with('error', lang('Auth.badAttempt'));
+    }
+
+if (! \Myth\Auth\Password::verify($password, $user->password_hash)) {
+    log_message('debug', "LOGIN FAILED: password mismatch for user id {$user->id}");
+    return redirect()->back()->withInput()->with('error', 'Password anda salah ndan. coba lagi ya.');
+}
+
+// optional: check active
+if (! empty($user->active) && $user->active == 0) {
+    return redirect()->back()->withInput()->with('error', 'Akun belum aktif.');
+}
+
+
+    if (! $this->auth->login($user, $remember)) {
+        return redirect()->back()->withInput()->with('error', $this->auth->error() ?? 'Login gagal');
+    }
+
+    $redirectURL = session('redirect_url') ?? site_url('/');
+    unset($_SESSION['redirect_url']);
+
+    return redirect()->to($redirectURL)->with('message', lang('Auth.loginSuccess'));
+}
+
+
 
     /**
      * Log the user out.
@@ -216,61 +266,91 @@ class AuthController extends Controller
      * Attempts to find a user account with that password
      * and send password reset instructions to them.
      */
+    // public function attemptForgot()
+    // {
+    //     if ($this->config->activeResetter === null) {
+    //         return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+    //     }
+
+    //     $rules = [
+    //         'email' => [
+    //             'label' => lang('Auth.emailAddress'),
+    //             'rules' => 'required|valid_email',
+    //         ],
+    //     ];
+
+    //     if (! $this->validate($rules)) {
+    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    //     }
+
+    //     $users = model(UserModel::class);
+
+    //     $user = $users->where('email', $this->request->getPost('email'))->first();
+
+    //     if (null === $user) {
+    //         return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
+    //     }
+
+    //     // Save the reset hash /
+    //     $user->generateResetHash();
+    //     $users->save($user);
+
+    //     $resetter = service('resetter');
+    //     $sent     = $resetter->send($user);
+
+    //     if (! $sent) {
+    //         return redirect()->back()->withInput()->with('error', $resetter->error() ?? lang('Auth.unknownError'));
+    //     }
+
+    //     return redirect()->route('reset-password')->with('message', lang('Auth.forgotEmailSent'));
+    // }
+    
     public function attemptForgot()
-    {
-        if ($this->config->activeResetter === null) {
-            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
-        }
+{
+    $users = model(UserModel::class);
+    $user  = $users->where('email', $this->request->getPost('email'))->first();
 
-        $rules = [
-            'email' => [
-                'label' => lang('Auth.emailAddress'),
-                'rules' => 'required|valid_email',
-            ],
-        ];
-
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-
-        $users = model(UserModel::class);
-
-        $user = $users->where('email', $this->request->getPost('email'))->first();
-
-        if (null === $user) {
-            return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
-        }
-
-        // Save the reset hash /
-        $user->generateResetHash();
-        $users->save($user);
-
-        $resetter = service('resetter');
-        $sent     = $resetter->send($user);
-
-        if (! $sent) {
-            return redirect()->back()->withInput()->with('error', $resetter->error() ?? lang('Auth.unknownError'));
-        }
-
-        return redirect()->route('reset-password')->with('message', lang('Auth.forgotEmailSent'));
+    if (! $user) {
+        return redirect()->back()->with('error', 'Email tidak ditemukan');
     }
 
-    /**
-     * Displays the Reset Password form.
-     */
-    public function resetPassword()
-    {
-        if ($this->config->activeResetter === null) {
-            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
-        }
+    // Generate token manual
+    $token = bin2hex(random_bytes(16));
 
-        $token = $this->request->getGet('token');
+    // Simpan ke auth_reset_attempts
+    $resetModel = new \App\Models\PasswordResetModel();
+    $resetModel->insert([
+        'email'      => $user->email,
+        'ip_address' => $this->request->getIPAddress(),
+        'user_agent' => (string) $this->request->getUserAgent(),
+        'token'      => $token,
+        'created_at' => date('Y-m-d H:i:s'),
+    ]);
 
-        return $this->_render($this->config->views['reset'], [
-            'config' => $this->config,
-            'token'  => $token,
-        ]);
-    }
+    // Kirim email reset dengan token plain
+    $resetLink = base_url('reset-password?token=' . $token);
+    // kirim lewat service email sesuai kebutuhan
+
+    return redirect()->route('login')->with('message', 'Link reset sudah dikirim ke email.');
+}
+
+
+//     /**
+//      * Displays the Reset Password form.
+//      */
+//     public function resetPassword()
+//     {
+//         if ($this->config->activeResetter === null) {
+//             return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+//         }
+
+//         $token = $this->request->getGet('token');
+
+//         return $this->_render($this->config->views['reset'], [
+//             'config' => $this->config,
+//             'token'  => $token,
+//         ]);
+//     }
 
     /**
      * Verifies the code with the email and saves the new password,
@@ -278,56 +358,111 @@ class AuthController extends Controller
      *
      * @return mixed
      */
-    public function attemptReset()
-    {
-        if ($this->config->activeResetter === null) {
-            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
-        }
+     
+    // public function attemptReset()
+    // {
+    //     if ($this->config->activeResetter === null) {
+    //         return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+    //     }
 
-        $users = model(UserModel::class);
+    //     $users = model(UserModel::class);
 
-        // First things first - log the reset attempt.
-        $users->logResetAttempt(
-            $this->request->getPost('email'),
-            $this->request->getPost('token'),
-            $this->request->getIPAddress(),
-            (string) $this->request->getUserAgent()
-        );
+    //     // First things first - log the reset attempt.
+    //     $users->logResetAttempt(
+    //         $this->request->getPost('email'),
+    //         $this->request->getPost('token'),
+    //         $this->request->getIPAddress(),
+    //         (string) $this->request->getUserAgent()
+    //     );
 
-        $rules = [
-            'token'        => 'required',
-            'email'        => 'required|valid_email',
-            'password'     => 'required|strong_password',
-            'pass_confirm' => 'required|matches[password]',
-        ];
+    //     $rules = [
+    //         'token'        => 'required',
+    //         'email'        => 'required|valid_email',
+    //         'password'     => 'required|strong_password',
+    //         'pass_confirm' => 'required|matches[password]',
+    //     ];
 
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
+    //     if (! $this->validate($rules)) {
+    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    //     }
 
-        $user = $users->where('email', $this->request->getPost('email'))
-            ->where('reset_hash', $this->request->getPost('token'))
-            ->first();
+    //     $user = $users->where('email', $this->request->getPost('email'))
+    //         ->where('reset_hash', $this->request->getPost('token'))
+    //         ->first();
 
-        if (null === $user) {
-            return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
-        }
+    //     if (null === $user) {
+    //         return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
+    //     }
 
-        // Reset token still valid?
-        if (! empty($user->reset_expires) && time() > $user->reset_expires->getTimestamp()) {
-            return redirect()->back()->withInput()->with('error', lang('Auth.resetTokenExpired'));
-        }
+    //     // Reset token still valid
+    //     if (! empty($user->reset_expires) && time() > $user->reset_expires->getTimestamp()) {
+    //         return redirect()->back()->withInput()->with('error', lang('Auth.resetTokenExpired'));
+    //     }
 
-        // Success! Save the new password, and cleanup the reset hash.
-        $user->password         = $this->request->getPost('password');
-        $user->reset_hash       = null;
-        $user->reset_at         = date('Y-m-d H:i:s');
-        $user->reset_expires    = null;
-        $user->force_pass_reset = false;
-        $users->save($user);
+    //     // Success! Save the new password, and cleanup the reset hash.
+    //     $user->password         = $this->request->getPost('password');
+    //     $user->reset_hash       = null;
+    //     $user->reset_at         = date('Y-m-d H:i:s');
+    //     $user->reset_expires    = null;
+    //     $user->force_pass_reset = false;
+    //     $users->save($user);
 
-        return redirect()->route('login')->with('message', lang('Auth.resetSuccess'));
+    //     return redirect()->route('login')->with('message', lang('Auth.resetSuccess'));
+    // }
+    
+    public function attemptResetPassword()
+{
+    helper(['form']);
+    $rules = [
+        'token'        => 'required',
+        'password'     => 'required|min_length[8]',
+        'pass_confirm' => 'matches[password]'
+    ];
+
+    if (! $this->validate($rules)) {
+        return redirect()->back()->withInput()->with('error', 'Password minimal 8 karakter dan konfirmasi harus cocok');
     }
+
+    $token = $this->request->getPost('token');
+    $newPass = $this->request->getPost('password');
+
+    $resetModel = new \App\Models\PasswordResetModel();
+    $reset = $resetModel->where('token', $token)->first();
+
+    if (! $reset) {
+        return redirect()->to('/login')->with('error', 'Token reset tidak valid atau sudah kadaluarsa');
+    }
+
+    // cek expiry: created_at + resetTime (detik)
+    $created = strtotime($reset['created_at']);
+    if ($created + config('Auth')->resetTime < time()) {
+        // hapus token kalau sudah expired
+        $resetModel->delete($reset['id']);
+        return redirect()->to('/login')->with('error', 'Token sudah kadaluarsa');
+    }
+
+    $userModel = new \App\Models\UserModel(); // atau Myth\Auth\Models\UserModel jika pakai vendor
+    $user = $userModel->where('email', $reset['email'])->first();
+
+    if (! $user) {
+        return redirect()->to('/login')->with('error', 'User tidak ditemukan.');
+    }
+
+    // Update password *menggunakan model* (jangan gunakan query builder mentah kecuali perlu)
+    $userModel->update($user['id'], [
+        'password_hash'    => \Myth\Auth\Password::hash($newPass),
+        'reset_hash'       => null,
+        'reset_expires'    => null,
+        'force_pass_reset' => 0,
+        'updated_at'       => date('Y-m-d H:i:s'),
+    ]);
+
+    // Hapus token
+    $resetModel->delete($reset['id']);
+
+    return redirect()->to('/login')->with('message', 'Password berhasil direset. Silakan login.');
+}
+
 
     /**
      * Activate account.

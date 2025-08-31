@@ -16,8 +16,6 @@ class Auth extends \Myth\Auth\Config\Auth
      * @var string
      */
     public $defaultUserGroup = 'user';
-    
-    public $userModel = \App\Models\UserModel::class;
 
     /**
      * --------------------------------------------------------------------
@@ -189,11 +187,6 @@ class Auth extends \Myth\Auth\Config\Auth
      */
     // public $requireActivation = 'Myth\Auth\Authentication\Activators\EmailActivator';
     public $requireActivation = null;
-//   public $requireActivation = \Myth\Auth\Authentication\Activators\EmailActivator::class;
-
-    
-    public $allowPasswordReset = true;
-
 
     /**
      * --------------------------------------------------------------------
@@ -204,11 +197,9 @@ class Auth extends \Myth\Auth\Config\Auth
      * via the specified Resetter. Default setting is email.
      *
      * @var string|null Name of the ResetterInterface class
-    //  */
+     */
     // public $activeResetter = 'Myth\Auth\Authentication\Resetters\EmailResetter';
     public $activeResetter = false;
-    // public $activeResetter = \Myth\Auth\Authentication\Resetters\EmailResetter::class;
-
 
     /**
      * --------------------------------------------------------------------
@@ -343,7 +334,7 @@ class Auth extends \Myth\Auth\Config\Auth
         'Myth\Auth\Authentication\Passwords\CompositionValidator',
         'Myth\Auth\Authentication\Passwords\NothingPersonalValidator',
         'Myth\Auth\Authentication\Passwords\DictionaryValidator',
-        'Myth\Auth\Authentication\Passwords\PwnedValidator'
+        // 'Myth\Auth\Authentication\Passwords\PwnedValidator'
     ];
 
     /**
@@ -355,16 +346,12 @@ class Auth extends \Myth\Auth\Config\Auth
      *
      * @var array
      */
- public $userActivators = [
-    'Myth\Auth\Authentication\Activators\EmailActivator' => [
-        // 'fromEmail' => null,
-        // 'fromName'  => null,
-          'fromEmail' => 'ci4.eritcn@gmail.com',
-            'fromName'  => 'Sistem Inventory Copy Gaes',
-    ]
-];
-
-
+    public $userActivators = [
+        'Myth\Auth\Authentication\Activators\EmailActivator' => [
+            'fromEmail' => null,
+            'fromName'  => null,
+        ],
+    ];
 
     /**
      * --------------------------------------------------------------------
@@ -379,9 +366,7 @@ class Auth extends \Myth\Auth\Config\Auth
         'Myth\Auth\Authentication\Resetters\EmailResetter' => [
             'fromEmail' => null,
             'fromName'  => null,
-           
-
-        ]
+        ],
     ];
 
     /**

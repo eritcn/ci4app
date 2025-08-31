@@ -57,6 +57,7 @@ $routes->get('/sparepart/edit/(:num)', 'Sparepart::edit/$1');
 $routes->get('/sparepart/(:num)', 'Sparepart::detail/$1');
 
 
+
 // CRUD Rusak
 $routes->get('/rusak', 'Rusak::index');
 $routes->post('/rusak/save', 'Rusak::save');
