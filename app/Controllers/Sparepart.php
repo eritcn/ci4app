@@ -113,7 +113,7 @@ class Sparepart extends BaseController
             'kode_sparepart' => $this->request->getVar('kode_sparepart'),
             'stok_east'      => $this->request->getVar('stok_east'),
             'stok_west'      => $this->request->getVar('stok_west'),
-            'deskripsi'      => $this->request->getVar('deskripsi'),
+            'detail_part'    => $this->request->getVar('detail_part'),
             'gambar_dokumen' => $namaFile,
             'created_by'     => user()->username,
         ]);
