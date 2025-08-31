@@ -53,7 +53,7 @@ class Sparepart extends BaseController
             'keyword'     => $keyword,
         ];
 
-        return view('sparepart/index', $data);
+        return view('sparepart', $data);
     }
 
     public function detail($id)
