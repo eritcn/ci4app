@@ -33,7 +33,7 @@ class Sparepart extends BaseController
                     ->orLike('kode_sparepart', $keyword)
                     ->orLike('stok_east', $keyword)
                     ->orLike('stok_west', $keyword)
-                    ->orLike('deskripsi', $keyword)
+                    ->orLike('detail_part', $keyword)
                     ->orLike('updated_by', $keyword)
                     ->orLike('created_by', $keyword);
             }
@@ -85,7 +85,7 @@ class Sparepart extends BaseController
             'kode_sparepart' => 'required|is_unique[sparepart.kode_sparepart]',
             'stok_east'      => 'required|integer',
             'stok_west'      => 'required|integer',
-            'deskripsi'      => 'required',
+            'detail_part'      => 'required',
             'gambar_dokumen' => [
                 'rules'  => 'uploaded[gambar_dokumen]|max_size[gambar_dokumen,5245]|is_image[gambar_dokumen]|mime_in[gambar_dokumen,image/jpg,image/jpeg,image/png]',
                 'errors' => [
