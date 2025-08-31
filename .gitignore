@@ -124,3 +124,14 @@ _modules/*
 
 /results/
 /phpunit*.xml
+
+# -------------------------
+# Custom project ignores
+# -------------------------
+
+# Uploads (gambar/dokumen user)
+public/uploads/
+
+# Build / Node
+node_modules/
+
