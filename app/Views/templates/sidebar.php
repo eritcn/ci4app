@@ -143,7 +143,7 @@
                     <i class="fas fa-fw fa-list text-warning"></i>
                     <span class="data-base text-gray-500">Perbaikan Radio HT</span></a> 
                         
-                          <a class="nav-link" href="<?= base_url('database'); ?>">
+                          <a class="nav-link" href="<?= base_url('sparepart'); ?>">
                     <i class="fas fa-fw fa-list text-warning"></i>
                     <span class="data-base text-gray-500">Stock Sparepart</a>
 
