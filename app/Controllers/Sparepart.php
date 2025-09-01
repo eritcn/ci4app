@@ -121,4 +121,20 @@ class Sparepart extends BaseController
         session()->setFlashdata('pesan', 'DATA BERHASIL DITAMBAHKAN');
         return redirect()->to('/sparepart');
     }
+
+    public function edit($id)
+{
+    $sparepart = $this->sparepartModel->find($id);
+
+    if (!$sparepart) {
+        throw new \CodeIgniter\Exceptions\PageNotFoundException("Data dengan ID $id tidak ditemukan");
+    }
+
+    return view('sparepart/edit', [
+        'title'      => 'Form Edit Sparepart',
+        'validation' => \Config\Services::validation(),
+        'sparepart'  => $sparepart,
+    ]);
+}
+
 }
