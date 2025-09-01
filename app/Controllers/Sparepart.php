@@ -122,19 +122,59 @@ class Sparepart extends BaseController
         return redirect()->to('/sparepart');
     }
 
-    public function edit($id)
-{
-    $sparepart = $this->sparepartModel->find($id);
+ public function delete($id)
+     {
+        $sparepart = $this->sparepartModel->find($id);
+        unlink('uploads/' . $sparepart['gambar_dokumen']);
+        $this->sparepartModel->delete($id);
+         session()->setFlashdata('pesan', 'DATA BERHASIL DIHAPUS');
+        return redirect()->to('/sparepart');
+     }
 
-    if (!$sparepart) {
-        throw new \CodeIgniter\Exceptions\PageNotFoundException("Data dengan ID $id tidak ditemukan");
-    }
+     public function edit($id)
+     {
+            $data = [
+            'title' => 'Form Ubah Data Sparepart',
+             'validation' => \Config\Services::validation(),
+             'sparepart' => $this->sparepartModel->getDatabase($id),
+        ];
 
-    return view('sparepart/edit', [
-        'title'      => 'Form Edit Sparepart',
-        'validation' => \Config\Services::validation(),
-        'sparepart'  => $sparepart,
-    ]);
-}
+        return view('sparepart/edit', $data); 
+     }
+
+     public function update($id)
+     {
+          $id = url_title($this->request->getVar('id'), ' ', false);
+
+          $dataLama =$this->sparepartModel->find($id);
+
+          $fileGambar = $this->request->getFile('gambar_dokumen');
+
+          if ($fileGambar && $fileGambar->isValid() && !$fileGambar->hasMoved()) {
+            $namaGambarBaru = $fileGambar->getRandomName();
+            $fileGambar->move('uploads/' , $namaGambarBaru);
+
+            if (!empty($dataLama['gambar_dokumen']) && file_exists('uploads/' . $dataLama['gambar_dokumen'])) {
+                unlink('uploads/' . $dataLama['gambar_dokumen']);
+            }
+          } else {
+            $namaGambarBaru = $dataLama['gambar_dokumen'];
+          }
+
+        $this->sparepartModel->save([
+            
+            'nama_sparepart' => $this->request->getVar('nama_sparepart'),
+            'kode_sparepart' => $this->request->getVar('kode_sparepart'),
+            'stock_east' => $this->request->getVar('stock_east'),
+            'stock_west' => $this->request->getVar('stock_west'),
+            'gambar_dokumen' => $namaGambarBaru,
+            'detail_part' => $this->request->getVar('detail_part'),
+            'created_by' => user()->username
+        ]);
+
+          session()->setFlashdata('pesan', 'DATA BERHASIL DI UBAH');
+
+        return redirect()->to('/sparepart');
+     }
 
 }
