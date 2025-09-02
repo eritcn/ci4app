@@ -72,6 +72,25 @@
             <a class="nav-link" href="<?= base_url('export/users'); ?>" target="_blank">
             <i class="fas fa-fw fa-file-excel text-success"></i>
             <span class="text-gray-500">Export Users</span></a>
+
+            <hr class="sidebar-divider border-secondary">
+
+            <a class="nav-link" href="<?= base_url('/sparepart/export'); ?>" target="_blank">
+            <i class="fas fa-fw fa-file-excel text-success"></i>
+            <span class="text-gray-500">Export Sparepart</span></a>
+
+               <!-- Export Sparepart PDF -->
+            <a class="nav-link" href="<?= base_url('/sparepart/export-pdf'); ?>" target="_blank">
+                <i class="fas fa-fw fa-file-pdf text-danger"></i>
+                <span class="text-gray-500">Export Sparepart (PDF)</span>
+            </a>
+
+                  <!-- Import Sparepart -->
+            <a class="nav-link" href="<?= base_url('/sparepart/import'); ?>">
+                <i class="fas fa-fw fa-file-upload text-warning"></i>
+                <span class="text-gray-500">Import Sparepart</span>
+            </a>
+
             
             </li>
             <!-- Divider -->

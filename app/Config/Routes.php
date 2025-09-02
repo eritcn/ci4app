@@ -58,6 +58,8 @@ $routes->get('/sparepart/(:num)', 'Sparepart::detail/$1');
 
 
 
+
+
 // CRUD Rusak
 $routes->get('/rusak', 'Rusak::index');
 $routes->post('/rusak/save', 'Rusak::save');
@@ -142,8 +144,24 @@ $routes->get('profile', 'Profile::index');
 $routes->get('profile/edit', 'Profile::edit');    
 $routes->post('profile/update', 'Profile::update'); 
 
+
 $routes->get('/export-users', 'ExportController::exportUsers');
 $routes->get('/export/users', 'ExportController::exportExcel');
+
+
+$routes->get('/sparepart/export', 'Sparepart::exportSparepart');
+
+$routes->get('/test-pdf', 'ExportController::testPdf');
+
+$routes->get('/sparepart/export-pdf', 'Sparepart::exportSparepartPdf');
+
+// Sparepart Import
+$routes->get('/sparepart/import', 'Sparepart::importView');
+$routes->post('/sparepart/importExcel', 'Sparepart::importExcel');
+
+
+
+
 
 
 
