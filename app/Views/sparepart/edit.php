@@ -7,7 +7,7 @@
         <div class="col-10">
             <h4 class="my-3 text-gray-700 font-italic"><b> Form Ubah Data Sparepart </b></h4>
             
-            <form action="/sparepart/update/<?= $database['id'] ?>" method="post" enctype="multipart/form-data">
+            <form action="/sparepart/update/<?= $sparepart['id'] ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <hr class="sidebar-divider border-secondary">
 
@@ -20,7 +20,7 @@
                                id="nama_sparepart" 
                                name="nama_sparepart" 
                                placeholder="Antenna [contoh]" 
-                               value="<?= old('nama_sparepart', $database['nama_sparepart']); ?>" 
+                               value="<?= old('nama_sparepart', $sparepart['nama_sparepart']); ?>" 
                                <?= $isAdmin ? '' : 'readonly' ?>>
                         <div class="invalid-feedback">
                             <?= $validation->getError('nama_sparepart'); ?>
