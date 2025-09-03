@@ -2,6 +2,16 @@
 
 namespace App\Controllers;
 
+use App\Models\GsjobModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use Dompdf\Dompdf;  
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 class Gsjob extends BaseController
 {  
     protected $gsjobModel;
@@ -163,4 +173,62 @@ class Gsjob extends BaseController
 
         return redirect()->to('/gsjob');
      }
+
+     public function exportGsjobPdf()
+{
+    if (!in_groups('admin')) {
+        return redirect()->to('/dashboard')->with('error', 'Anda tidak punya akses ke fitur ini.');
+    }
+
+    $gsjob = $this->gsjobModel->findAll();
+
+    // Siapkan HTML untuk Dompdf
+    $html = '
+    <h3 style="text-align:center;">LIST GS JOB</h3>
+    <table border="1" cellpadding="5" cellspacing="0" width="100%" style="border-collapse:collapse; font-size:12px;">
+        <thead>
+            <tr style="background-color:#4F81BD; color:#fff; text-align:center;">
+                <th>ID</th>
+                <th>Tanggal</th>
+                <th>Lokasi</th>
+                <th>Pekerjaan</th>
+                <th>Keterangan</th>
+                <th>Status</th>
+                <th>Created By</th>
+                <th>Updated By</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+    foreach ($gsjob as $g) {
+    
+        $html .= '
+            <tr>
+                <td style="text-align:center;">' . $g['id'] . '</td>
+                <td>' . $g['tanggal'] . '</td>
+                <td>' . $g['lokasi'] . '</td>
+                <td>' . $g['slug'] . '</td>
+                <td><img src="' . FCPATH . 'uploads/' . $g['keterangan'] . '" width="80"></td>
+                <td>' . $g['status'] . '</td>
+                <td>' . $g['created_by'] . '</td>
+                <td>' . $g['updated_by'] . '</td>
+            </tr>';
+    }
+
+    $html .= '
+        </tbody>
+    </table>
+    <br>
+    <p><b>Total Data:</b> ' . count($gsjob) . '</p>
+    <p><b>Tanggal Export:</b> ' . date('d-m-Y H:i:s') . '</p>
+    ';
+
+    // Generate PDF dengan Dompdf
+    $dompdf = new \Dompdf\Dompdf();
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->render();
+    $dompdf->stream('Data_GS Job' . date('Ymd_His') . '.pdf', ["Attachment" => false]);
+}
+
 }

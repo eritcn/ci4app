@@ -20,6 +20,8 @@ $routes->get('/user', 'User::index');
 $routes->get('/ready', 'Ready::index');
 $routes->get('/breakdown', 'Breakdown::index');
 
+
+$routes->get('/gsjob/export-pdf', 'Gsjob::exportGsjobPdf');
 // CRUD Gsjob
 $routes->get('/gsjob', 'Gsjob::index');
 $routes->post('/gsjob/save', 'Gsjob::save');
@@ -55,6 +57,15 @@ $routes->delete('/sparepart/(:num)', 'Sparepart::delete/$1');
 $routes->get('/sparepart/create', 'Sparepart::create');
 $routes->get('/sparepart/edit/(:num)', 'Sparepart::edit/$1');
 $routes->get('/sparepart/(:num)', 'Sparepart::detail/$1');
+
+// Stock Radio Rig Bagus
+$routes->get('/stock_radio_rig_bagus', 'StockRadioRigBagus::index');
+$routes->post('/stock_radio_rig_bagus/save', 'StockRadioRigBagus::save');
+$routes->post('/stock_radio_rig_bagus/update/(:num)', 'StockRadioRigBagus::update/$1');
+$routes->delete('/stock_radio_rig_bagus/(:num)', 'StockRadioRigBagus::delete/$1');
+$routes->get('/stock_radio_rig_bagus/create', 'StockRadioRigBagus::create');
+$routes->get('/stock_radio_rig_bagus/edit/(:num)', 'StockRadioRigBagus::edit/$1');
+$routes->get('/stock_radio_rig_bagus/(:num)', 'StockRadioRigBagus::detail/$1');
 
 
 
@@ -154,6 +165,10 @@ $routes->get('/sparepart/export', 'Sparepart::exportSparepart');
 $routes->get('/test-pdf', 'ExportController::testPdf');
 
 $routes->get('/sparepart/export-pdf', 'Sparepart::exportSparepartPdf');
+
+
+
+$routes->get('/stock_radio_rig_bagus/export-pdf', 'StockRadioRigBagus::exportStockRadioRigBagusPdf');
 
 // Sparepart Import
 $routes->get('/sparepart/import', 'Sparepart::importView');

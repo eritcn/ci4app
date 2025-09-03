@@ -27,6 +27,11 @@
 <b> <?= session()->getFlashdata('pesan'); ?> </b>
 </div>
  <?php endif ?> 
+
+ <a href="<?= base_url('gsjob/export-pdf'); ?>" target="_blank" class="btn btn-outline-danger btn-sm">
+    <i class="fas fa-file-pdf"></i> Export PDF
+</a>
+
                  
 
 <div class="table-responsive">
