@@ -197,7 +197,7 @@ public function update($id)
         'merk' => $this->request->getVar('merk'),
         'type' => $this->request->getVar('type'),
         'serial_number'      => $this->request->getVar('serial_number'),
-        'keterangan'      => $this->request->getVar('kerterangan'),
+        'keterangan'      => $this->request->getVar('keterangan'),
         'posisi'    => $this->request->getVar('posisi'),
         'gambar_dokumen' => $namaFile,
         'updated_by'     => user()->username,
@@ -207,36 +207,25 @@ public function update($id)
     return redirect()->to('/stock_radio_rig_bagus');
 }
 
-  public function exportSparepart()
+public function exportStockRadioRigBagusExcel()
 {
     if (!in_groups('admin')) {
         return redirect()->to('/dashboard')->with('error', 'Anda tidak punya akses ke fitur ini.');
     }
 
-    $spareparts = $this->sparepartModel->findAll();
+    $radios = $this->stockradiorigbagusModel->findAll();
 
     $spreadsheet = new Spreadsheet();
     $sheet = $spreadsheet->getActiveSheet();
 
-    // Logo
-    $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-    $drawing->setName('Logo');
-    $drawing->setDescription('Logo Perusahaan');
-    $drawing->setPath(FCPATH . 'images/logo.png');
-    $drawing->setHeight(35);
-    $drawing->setCoordinates('A1');
-    $drawing->setOffsetX(5);
-    $drawing->setOffsetY(5);
-    $drawing->setWorksheet($sheet);
-
     // Judul
-    $sheet->setCellValue('B1', 'DATA SPAREPART SISTEM INVENTORY');
-    $sheet->mergeCells('B1:H1');
-    $sheet->getStyle('B1')->getFont()->setBold(true)->setSize(10);
-    $sheet->getStyle('B1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    $sheet->setCellValue('A1', 'DATA STOCK RADIO RIG BAGUS - INVENTORY');
+    $sheet->mergeCells('A1:H1');
+    $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14);
+    $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
     // Header tabel
-    $headers = ['ID', 'Nama Sparepart', 'Kode Sparepart', 'Detail', 'Stock West', 'Stock East', 'Created By', 'Updated By'];
+    $headers = ['ID', 'Merk', 'Type', 'Serial Number', 'Keterangan', 'Posisi', 'Created By', 'Updated By'];
     $col = 'A';
     foreach ($headers as $h) {
         $sheet->setCellValue($col . '3', $h);
@@ -246,68 +235,36 @@ public function update($id)
     // Styling header
     $sheet->getStyle('A3:H3')->applyFromArray([
         'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
-        'alignment' => [
-            'horizontal' => Alignment::HORIZONTAL_CENTER,
-            'vertical' => Alignment::VERTICAL_CENTER
-        ],
-        'borders' => [
-            'allBorders' => ['borderStyle' => Border::BORDER_THIN]
-        ],
-        'fill' => [
-            'fillType' => Fill::FILL_SOLID,
-            'startColor' => ['rgb' => '4F81BD']
-        ]
+        'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
+        'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN]],
+        'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '4F81BD']]
     ]);
 
     // Isi data
     $row = 4;
-    foreach ($spareparts as $s) {
-        $sheet->setCellValue('A' . $row, $s['id']);
-        $sheet->setCellValue('B' . $row, $s['nama_sparepart']);
-        $sheet->setCellValue('C' . $row, $s['kode_sparepart']);
-        $sheet->setCellValue('D' . $row, $s['detail_part']);
-        $sheet->setCellValue('E' . $row, $s['stok_west']);
-        $sheet->setCellValue('F' . $row, $s['stok_east']);
-        $sheet->setCellValue('G' . $row, $s['created_by']);
-        $sheet->setCellValue('H' . $row, $s['updated_by']);
+    foreach ($radios as $r) {
+        $sheet->setCellValue('A' . $row, $r['id']);
+        $sheet->setCellValue('B' . $row, $r['merk']);
+        $sheet->setCellValue('C' . $row, $r['type']);
+        $sheet->setCellValue('D' . $row, $r['serial_number']);
+        $sheet->setCellValue('E' . $row, $r['keterangan']);
+        $sheet->setCellValue('F' . $row, $r['posisi']);
+        $sheet->setCellValue('G' . $row, $r['created_by']);
+        $sheet->setCellValue('H' . $row, $r['updated_by']);
 
         // Border tiap baris
         $sheet->getStyle('A' . $row . ':H' . $row)->applyFromArray([
-            'borders' => [
-                'allBorders' => ['borderStyle' => Border::BORDER_THIN]
-            ]
+            'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN]]
         ]);
 
         $row++;
     }
 
-    // Tambahkan filter di header
-    $sheet->setAutoFilter('A3:H3');
-
-    // Conditional formatting stok <= 5 → merah
-    $conditional = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
-    $conditional->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS)
-        ->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_LESSTHANOREQUAL)
-        ->addCondition('5');
-    $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FF0000');
-    $conditional->getStyle()->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
-
-    // Terapkan ke kolom stok west & east
-    $conditionalStyles = $sheet->getStyle('E4:F' . ($row - 1))->getConditionalStyles();
-    $conditionalStyles[] = $conditional;
-    $sheet->getStyle('E4:F' . ($row - 1))->setConditionalStyles($conditionalStyles);
-
     // Footer total data
     $sheet->setCellValue('A' . $row, 'Total Data');
-    $sheet->setCellValue('B' . $row, count($spareparts));
+    $sheet->setCellValue('B' . $row, count($radios));
     $sheet->mergeCells('A' . $row . ':B' . $row);
     $sheet->getStyle('A' . $row . ':B' . $row)->getFont()->setBold(true);
-
-    // Tanggal export
-    $row++;
-    $sheet->setCellValue('A' . $row, 'Tanggal Export: ' . date('d-m-Y H:i:s'));
-    $sheet->mergeCells('A' . $row . ':H' . $row);
-    $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
 
     // Auto-size kolom
     foreach (range('A', 'H') as $col) {
@@ -316,7 +273,7 @@ public function update($id)
 
     // Export
     $writer = new Xlsx($spreadsheet);
-    $filename = 'Data_Sparepart_' . date('Ymd_His') . '.xlsx';
+    $filename = 'StockRadioRigBagus_' . date('Ymd_His') . '.xlsx';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="' . $filename . '"');
@@ -325,6 +282,7 @@ public function update($id)
     $writer->save('php://output');
     exit;
 }
+
 
 public function exportStockRadioRigBagusPdf()
 {
@@ -384,42 +342,40 @@ public function exportStockRadioRigBagusPdf()
 }
 
 
-public function importExcel()
+public function importStockRadioRigBagus()
 {
-    $file = $this->request->getFile('file_excel'); // ambil dulu objek file
+    $file = $this->request->getFile('file_excel');
 
     if ($file && $file->isValid() && !$file->hasMoved()) {
         $extension = $file->getClientExtension();
 
         if (in_array($extension, ['xls', 'xlsx'])) {
-            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file->getTempName());
+            $spreadsheet = IOFactory::load($file->getTempName());
             $sheetData = $spreadsheet->getActiveSheet()->toArray();
 
-            // Lewati header misal baris ke-3
+            // Lewati header (baris 1–2)
             for ($i = 3; $i < count($sheetData); $i++) {
-    $row = $sheetData[$i];
+                $row = $sheetData[$i];
 
-    // Skip baris kosong
-    if (!array_filter($row)) continue;
+                if (!array_filter($row)) continue; // skip baris kosong
 
-    // Skip kalau sparepart utama kosong
-    if (empty($row[1]) || empty($row[2])) continue;
+                $data = [
+                    'merk'          => $row[1] ?? null,
+                    'type'          => $row[2] ?? null,
+                    'serial_number' => $row[3] ?? null,
+                    'keterangan'    => $row[4] ?? null,
+                    'posisi'        => $row[5] ?? null,
+                    'created_by'    => $row[6] ?? 'system',
+                    'updated_by'    => $row[7] ?? 'system',
+                ];
 
-    $data = [
-        'nama_sparepart' => $row[1],
-        'kode_sparepart' => $row[2],
-        'detail_part'    => $row[3] ?? null,
-        'stok_west'      => $row[4] ?? 0,
-        'stok_east'      => $row[5] ?? 0,
-        'created_by'     => $row[6] ?? 'system',
-        'updated_by'     => $row[7] ?? 'system',
-    ];
+                // Insert hanya jika serial number belum ada
+                if (!$this->stockradiorigbagusModel->where('serial_number', $data['serial_number'])->first()) {
+                    $this->stockradiorigbagusModel->insert($data);
+                }
+            }
 
-    $this->sparepartModel->insert($data);
-}
-
-
-            return redirect()->to('/sparepart')->with('success', 'Data berhasil diimport dari Excel!');
+            return redirect()->to('/stock_radio_rig_bagus')->with('success', 'Data berhasil diimport dari Excel!');
         } else {
             return redirect()->back()->with('error', 'Format file tidak didukung. Gunakan xls/xlsx.');
         }
@@ -428,12 +384,6 @@ public function importExcel()
     return redirect()->back()->with('error', 'File tidak valid atau gagal diupload.');
 }
 
-public function importView()
-{
-    return view('sparepart/import_sparepart', [
-        'title' => 'Import Data Sparepart'
-    ]);
-}
 
 
 

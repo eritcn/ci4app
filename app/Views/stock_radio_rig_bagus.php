@@ -26,7 +26,28 @@
             <hr class="sidebar-divider border-secondary">   
 
             <!-- Tombol tambah -->
-            <a href="/stock_radio_rig_bagus/create" class="btn bg-success text-white mb-1 btn-sm"><b> Tambah List </b></a>  
+            <!-- <a href="/stock_radio_rig_bagus/create" class="btn bg-success text-white mb-1 btn-sm"><b> Tambah List </b></a>   -->
+<div class="d-flex justify-content-between mb-3">
+    <a href="<?= base_url('stock-radio-rig-bagus/create'); ?>" class="btn btn-primary btn-sm">
+        <i class="fas fa-plus"></i> Tambah List
+    </a>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-file-export"></i> Export
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="<?= base_url('stock-radio-rig-bagus/export-excel'); ?>">
+                <i class="fas fa-file-excel text-success"></i> Export Excel
+            </a>
+            <a class="dropdown-item" href="<?= base_url('stock-radio-rig-bagus/export-pdf'); ?>">
+                <i class="fas fa-file-pdf text-danger"></i> Export PDF
+            </a>
+        </div>
+    </div>
+</div>
+
+
 
             <!-- Flash Messages -->
             <?php if(session()->getFlashdata('pesan')) : ?>     

@@ -46,11 +46,11 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Dokumen Gambar</th>
+                            <!-- <th>Dokumen Gambar</th> -->
                             <th>Nama Sparepart</th>
                             <th>Kode Sparepart</th>
-                            <th>Stock East</th>
                             <th>Stock West</th>
+                            <th>Stock East</th>
                             <th>Last Update</th>
                             <th>Rincian</th>
                         </tr>
@@ -60,31 +60,31 @@
                         <?php foreach($sparepart as $s) : ?>
                             <?php
                                 $limit = 5;
-                                $stokEastLimit = $s['stok_east'] <= $limit;
                                 $stokWestLimit = $s['stok_west'] <= $limit;
+                                $stokEastLimit = $s['stok_east'] <= $limit;
                             ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td>
+                                <!-- <td>
                                     <?php if(!empty($s['gambar_dokumen'])): ?>
                                         <img src="/uploads/<?= esc($s['gambar_dokumen']); ?>" alt="" class="doc">
                                     <?php else: ?>
                                         <span class="text-muted">No Image</span>
                                     <?php endif; ?>
-                                </td>
+                                </td> -->
                                 <td><?= esc($s['nama_sparepart']); ?></td>
                                 <td><?= esc($s['kode_sparepart']); ?></td>
-
-                                <td class="<?= $stokEastLimit ? 'text-danger font-weight-bold' : 'text-success font-weight-bold' ?>">
-                                    <?= esc($s['stok_east']); ?>
-                                    <?php if ($stokEastLimit): ?>
-                                        <span class="badge bg-danger text-white rounded-0">⚠ Limit</span>
-                                    <?php endif; ?>
-                                </td>
 
                                 <td class="<?= $stokWestLimit ? 'text-danger font-weight-bold' : 'text-success font-weight-bold' ?>">
                                     <?= esc($s['stok_west']); ?>
                                     <?php if ($stokWestLimit): ?>
+                                        <span class="badge bg-danger text-white rounded-0">⚠ Limit</span>
+                                    <?php endif; ?>
+                                </td>
+
+                                <td class="<?= $stokEastLimit ? 'text-danger font-weight-bold' : 'text-success font-weight-bold' ?>">
+                                    <?= esc($s['stok_east']); ?>
+                                    <?php if ($stokEastLimit): ?>
                                         <span class="badge bg-danger text-white rounded-0">⚠ Limit</span>
                                     <?php endif; ?>
                                 </td>

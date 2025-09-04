@@ -354,8 +354,8 @@ public function exportSparepartPdf()
 
     foreach ($spareparts as $s) {
         // Conditional formatting: merah kalau stok < 5
-        $stockWestStyle = ($s['stok_west'] < 5) ? 'color:red; font-weight:bold;' : 'color:black;';
-        $stockEastStyle = ($s['stok_east'] < 5) ? 'color:red; font-weight:bold;' : 'color:black;';
+        $stockWestStyle = ($s['stok_west'] <= 5) ? 'color:red; font-weight:bold;' : 'color:black;';
+        $stockEastStyle = ($s['stok_east'] <= 5) ? 'color:red; font-weight:bold;' : 'color:black;';
 
         $html .= '
             <tr>
